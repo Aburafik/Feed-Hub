@@ -45,7 +45,7 @@ class _DashBoardViewState extends State<DashBoardView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(),
+      drawer: const Drawer(),
       appBar: AppBar(
         title: const Text("Home"),
         actions: [

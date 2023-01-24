@@ -1,6 +1,9 @@
 import 'package:feed_hub/Utils/colors.dart';
 import 'package:feed_hub/Utils/images.dart';
+import 'package:feed_hub/Utils/router_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class HomeVC extends StatelessWidget {
   const HomeVC({super.key});
@@ -8,7 +11,6 @@ class HomeVC extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    
       // drawer: const Drawer(),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -156,41 +158,60 @@ class NGosCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextStyle style = Theme.of(context).textTheme.bodyText1!;
-    return Card(
-      child: SizedBox(
-        height: 220,
-        width: 200,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Image.asset(Images.img),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Feed Hungry Child",
-                      style: style.copyWith(fontSize: 15),
-                    ),
-                    const Text("Child Care Foundation"),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Target: 50",
-                          style: style,
+    return GestureDetector(
+      onTap: () => Get.toNamed(RouterHelper.homeDetailsView),
+      child: Card(
+        child: SizedBox(
+          height: 220,
+          width: 200,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Image.asset(Images.img),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Feed Hungry Child",
+                        style: style.copyWith(fontSize: 15),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      const Text("Child Care Foundation"),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 15, bottom: 5),
+                        child: LinearPercentIndicator(
+                          padding: EdgeInsets.zero,
+                          barRadius: const Radius.circular(5),
+                          width: 180,
+                          lineHeight: 5.0,
+                          percent: 0.6,
+                          backgroundColor: Colors.grey[300],
+                          progressColor: AppColors.primaryColor,
                         ),
-                        Text("65%",
-                            style: style.copyWith(
-                              color: AppColors.primaryColor,
-                            ))
-                      ],
-                    ),
-                  ],
-                ),
-              )
-            ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Target: 50",
+                            style: style,
+                          ),
+                          Text("65%",
+                              style: style.copyWith(
+                                color: AppColors.primaryColor,
+                              ))
+                        ],
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
