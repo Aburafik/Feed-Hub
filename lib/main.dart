@@ -1,6 +1,5 @@
 import 'package:feed_hub/Utils/colors.dart';
 import 'package:feed_hub/Utils/router_helper.dart';
-import 'package:feed_hub/Views/dashboard/dash_board_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 
@@ -27,7 +26,7 @@ class MyApp extends StatelessWidget {
             ),
             iconTheme: IconThemeData(color: AppColors.whiteColor)),
       ),
-       initialRoute: RouterHelper.dashBoard,
+      initialRoute: RouterHelper.signIn,
       getPages: RouterHelper.router,
     );
   }

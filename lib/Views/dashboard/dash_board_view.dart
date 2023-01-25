@@ -24,11 +24,11 @@ class _DashBoardViewState extends State<DashBoardView> {
 
     screens = [
       const HomeVC(),
+      const DonationHistoryVC(),
+      ProfileVC(),
       const Center(
         child: Text("Home"),
       ),
-      const DonationHistoryVC(),
-      ProfileVC()
     ];
     super.initState();
   }
@@ -45,7 +45,7 @@ class _DashBoardViewState extends State<DashBoardView> {
     return Scaffold(
       drawer: const Drawer(),
       appBar: AppBar(
-        title: const Text("Home"),
+        title: const Text("FEED Hub"),
         actions: [
           IconButton(
             onPressed: () {},
@@ -66,10 +66,10 @@ class _DashBoardViewState extends State<DashBoardView> {
         onTap: _setPage,
         items: const [
           BottomNavigationBarItem(label: "Home", icon: Icon(Icons.home)),
-          BottomNavigationBarItem(label: "Post", icon: Icon(Icons.list)),
-          BottomNavigationBarItem(label: "History", icon: Icon(Icons.person)),
+          BottomNavigationBarItem(label: "History", icon: Icon(Icons.list)),
           BottomNavigationBarItem(
-              label: "Profile", icon: Icon(Icons.menu_rounded)),
+              label: "Profile", icon: Icon(Icons.person)),
+          BottomNavigationBarItem(label: "Chats", icon: Icon(Icons.chat)),
         ],
       ),
     );

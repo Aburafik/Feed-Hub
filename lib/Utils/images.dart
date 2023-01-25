@@ -1,4 +1,5 @@
 class Images {
   static const String food = "assets/images/food.png";
+  static const String login = "assets/images/login.png";
   static const String img = "assets/images/oph.jpeg";
 }

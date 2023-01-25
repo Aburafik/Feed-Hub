@@ -1,3 +1,5 @@
+import 'package:feed_hub/Views/authentication/sign_in.dart';
+import 'package:feed_hub/Views/authentication/sign_up.dart';
 import 'package:feed_hub/Views/dashboard/dash_board_view.dart';
 import 'package:feed_hub/Views/donate/donate_form.dart';
 import 'package:feed_hub/Views/home/home_details_view.dart';
@@ -19,5 +21,7 @@ class RouterHelper {
     GetPage(name: homeDetailsView, page: () => const HomeDetailsView()),
     GetPage(name: donateFormView, page: () => const DonateFormVC()),
     GetPage(name: allNgoListView, page: () => const AllOrganizationsListVC()),
+    GetPage(name: signUp, page: () => SignUP()),
+    GetPage(name: signIn, page: () => SignIn()),
   ];
 }

@@ -1,4 +1,3 @@
-import 'package:feed_hub/Utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class DonationHistoryVC extends StatelessWidget {
@@ -12,14 +11,15 @@ class DonationHistoryVC extends StatelessWidget {
           itemBuilder: (context, index) {
             return Card(
               child: ListTile(
-                title: Text("Donation Name"),
-                leading: Icon(Icons.check_circle_outline),
+                title: const Text("Donation Name"),
+                subtitle: const Text("erjfjnfvjf"),
+                leading: const Icon(Icons.check_circle_outline),
                 trailing: Material(
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5)),
-                    color: AppColors.primaryLightColor,
-                    child: Padding(
-                      padding: const EdgeInsets.all(2),
+                        borderRadius: BorderRadius.circular(3)),
+                    color: const Color(0xffF7682B),
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 2, horizontal: 5),
                       child: Text("Pending"),
                     )),
               ),
