@@ -21,7 +21,7 @@ class HomeVC extends StatelessWidget {
               const HomeBanner(),
               HomeHeadingComponent(
                 leading: "Recent NGOs Request",
-                onTap: () {},
+                onTap: () => Get.toNamed(RouterHelper.allNgoListView),
               ),
               SizedBox(
                 height: 230,
@@ -35,7 +35,7 @@ class HomeVC extends StatelessWidget {
               ),
               HomeHeadingComponent(
                 leading: "Others Request",
-                onTap: () {},
+                onTap: () => Get.toNamed(RouterHelper.allNgoListView),
               ),
               ListView.builder(
                   shrinkWrap: true,
@@ -61,57 +61,60 @@ class OtherRequestCardComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     TextStyle style = Theme.of(context).textTheme.bodyText1!;
 
-    return Card(
-      child: SizedBox(
-        height: 100,
-        width: MediaQuery.of(context).size.height,
-        child: Row(
-          children: [
-            Card(
-              child: SizedBox(
-                height: 80,
-                width: 80,
-                child: Image.asset(
-                  Images.img,
-                  fit: BoxFit.cover,
+    return GestureDetector(
+      onTap: () => Get.toNamed(RouterHelper.homeDetailsView),
+      child: Card(
+        child: SizedBox(
+          height: 100,
+          width: MediaQuery.of(context).size.height,
+          child: Row(
+            children: [
+              Card(
+                child: SizedBox(
+                  height: 80,
+                  width: 80,
+                  child: Image.asset(
+                    Images.img,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(width: 10),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Mothers Of Peace",
-                  style: style.copyWith(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black),
-                ),
-                Row(
-                  children: const [
-                    Icon(
-                      Icons.location_on,
-                      size: 15,
-                      color: Colors.grey,
-                    ),
-                    Text("Kasoa")
-                  ],
-                ),
-                Row(
-                  children: const [
-                    Icon(
-                      Icons.star,
-                      size: 15,
-                      color: Colors.yellow,
-                    ),
-                    Text("4.5")
-                  ],
-                )
-              ],
-            )
-          ],
+              const SizedBox(width: 10),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Mothers Of Peace",
+                    style: style.copyWith(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black),
+                  ),
+                  Row(
+                    children: const [
+                      Icon(
+                        Icons.location_on,
+                        size: 15,
+                        color: Colors.grey,
+                      ),
+                      Text("Kasoa")
+                    ],
+                  ),
+                  Row(
+                    children: const [
+                      Icon(
+                        Icons.star,
+                        size: 15,
+                        color: Colors.yellow,
+                      ),
+                      Text("4.5")
+                    ],
+                  )
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );

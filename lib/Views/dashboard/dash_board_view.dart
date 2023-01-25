@@ -1,5 +1,7 @@
 import 'package:feed_hub/Utils/colors.dart';
+import 'package:feed_hub/Views/donate/donation_history.dart';
 import 'package:feed_hub/Views/home/home.dart';
+import 'package:feed_hub/Views/profile/profile_view.dart';
 import 'package:flutter/material.dart';
 
 class DashBoardView extends StatefulWidget {
@@ -20,17 +22,13 @@ class _DashBoardViewState extends State<DashBoardView> {
   void initState() {
     _pageController = PageController(initialPage: _pageIndex);
 
-    screens = const [
-      HomeVC(),
-      Center(
+    screens = [
+      const HomeVC(),
+      const Center(
         child: Text("Home"),
       ),
-      Center(
-        child: Text("Home"),
-      ),
-      Center(
-        child: Text("Home"),
-      ),
+      const DonationHistoryVC(),
+      ProfileVC()
     ];
     super.initState();
   }
