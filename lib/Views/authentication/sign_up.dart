@@ -1,5 +1,6 @@
 import 'package:feed_hub/Components/common_button.dart';
 import 'package:feed_hub/Components/form_field.dart';
+import 'package:feed_hub/Services/auth_service.dart';
 import 'package:feed_hub/Utils/colors.dart';
 import 'package:feed_hub/Utils/router_helper.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,8 @@ class SignUP extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController locationController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
-
+  final TextEditingController passwordController = TextEditingController();
+  final AuthUser authUser = AuthUser();
   @override
   Widget build(BuildContext context) {
     TextStyle style = Theme.of(context).textTheme.bodyText1!;
@@ -32,7 +34,8 @@ class SignUP extends StatelessWidget {
                       style: Theme.of(context)
                           .textTheme
                           .bodyText1!
-                          .copyWith(fontSize: 25)),
+                          .copyWith(fontSize: 25),
+                          ),
                   const SizedBox(height: 20),
                   FormFieldComponent(
                     label: "Full Name",
@@ -56,9 +59,24 @@ class SignUP extends StatelessWidget {
                       controller: phoneController,
                     ),
                   ),
+                   Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 15),
+                    child: FormFieldComponent(
+                      label: "Password",
+                      controller: passwordController,
+                    ),
+                  ),
                   const SizedBox(height: 40),
                   CommonButton(
-                    onPressed: () => Get.offNamed(RouterHelper.dashBoard),
+                    onPressed: () async {
+                      authUser.signUpUser(
+                          fullName: nameController.text,
+                          emailAddress: emailController.text,
+                          location: locationController.text,
+                          contact: phoneController.text,
+                          password: passwordController.text,
+                          context: context);
+                    },
                     buttonText: "Sign Up",
                   ),
                   Padding(

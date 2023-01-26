@@ -1,5 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:feed_hub/Components/common_button.dart';
 import 'package:feed_hub/Components/form_field.dart';
+import 'package:feed_hub/Services/auth_service.dart';
+import 'package:feed_hub/Services/user_services.dart';
 import 'package:feed_hub/Utils/colors.dart';
 import 'package:feed_hub/Utils/router_helper.dart';
 import 'package:flutter/material.dart';
@@ -7,8 +11,10 @@ import 'package:get/route_manager.dart';
 
 class SignIn extends StatelessWidget {
   SignIn({super.key});
-  final TextEditingController nameControlleer = TextEditingController();
-  final TextEditingController emailControlleer = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final UserServices _userServices = UserServices();
+  final AuthUser _authUser = AuthUser();
   @override
   Widget build(BuildContext context) {
     TextStyle style = Theme.of(context).textTheme.bodyText1!;
@@ -37,16 +43,23 @@ class SignIn extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 15),
                     child: FormFieldComponent(
                       label: "Email",
-                      controller: nameControlleer,
+                      controller: emailController,
                     ),
                   ),
                   FormFieldComponent(
                     label: "Password",
-                    controller: nameControlleer,
+                    controller: passwordController,
                   ),
                   const SizedBox(height: 40),
                   CommonButton(
-                    onPressed: () => Get.offNamed(RouterHelper.dashBoard),
+                    onPressed: () async {
+                      await _authUser.signInUser(
+                          emailAddress: emailController.text,
+                          password: passwordController.text,
+                          context: context);
+
+                      await _userServices.getUser();
+                    },
                     buttonText: "Sign In",
                   ),
                   Padding(

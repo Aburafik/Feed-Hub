@@ -24,7 +24,7 @@ class _DashBoardViewState extends State<DashBoardView> {
 
     screens = [
       const HomeVC(),
-      const DonationHistoryVC(),
+       DonationHistoryVC(),
       ProfileVC(),
       const Center(
         child: Text("Home"),

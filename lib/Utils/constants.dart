@@ -1,5 +1,9 @@
+import 'package:feed_hub/Components/common_button.dart';
+import 'package:feed_hub/Utils/colors.dart';
+import 'package:feed_hub/Utils/router_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class NGoDetailsImageHolderComponent extends StatelessWidget {
   const NGoDetailsImageHolderComponent({
@@ -45,12 +49,75 @@ class NgoImagesCard extends StatelessWidget {
   }
 }
 
- Padding headerTitle({BuildContext? context, String? title}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 15),
-      child: Text(
-        title!,
-        style: Theme.of(context!).textTheme.bodyText1!.copyWith(fontSize: 18),
+Padding headerTitle({BuildContext? context, String? title}) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 15),
+    child: Text(
+      title!,
+      style: Theme.of(context!).textTheme.bodyText1!.copyWith(fontSize: 18),
+    ),
+  );
+}
+
+startLoading({String? status}) {
+  return EasyLoading.show(
+    status: status,
+    maskType: EasyLoadingMaskType.black,
+  );
+}
+
+stopLoading() {
+  return EasyLoading.dismiss();
+}
+
+showSnackbar({String? messsage, BuildContext? context, bool isError = false}) {
+  ScaffoldMessenger.of(context!).showSnackBar(
+    SnackBar(
+      content: Text(messsage!),
+      backgroundColor: isError ? Colors.red : AppColors.primaryColor,
+    ),
+  );
+}
+
+donateSuccessMessage({BuildContext? context}) {
+  Get.defaultDialog(
+      backgroundColor: AppColors.whiteColor.withOpacity(0.7),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      title: "",
+      content: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            const CircleAvatar(
+              radius: 40,
+              backgroundColor: AppColors.primaryColor,
+              child: Icon(Icons.check, color: AppColors.whiteColor, size: 50),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Text(
+                "Success",
+                style: Theme.of(context!)
+                    .textTheme
+                    .bodyText1!
+                    .copyWith(fontSize: 20),
+              ),
+            ),
+            Text(
+              "Your donation request was sent successfully",
+              style:
+                  Theme.of(context).textTheme.headline2!.copyWith(fontSize: 16),
+              textAlign: TextAlign.center,
+            )
+          ],
+        ),
       ),
-    );
-  }
+      confirm: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        child: CommonButton(
+            buttonText: "Done",
+            onPressed: () {
+              Get.toNamed(RouterHelper.dashBoard);
+            }),
+      ));
+}

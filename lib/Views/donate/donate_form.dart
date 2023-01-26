@@ -1,9 +1,9 @@
 import 'package:feed_hub/Components/common_button.dart';
 import 'package:feed_hub/Components/form_field.dart';
+import 'package:feed_hub/Services/donate_services.dart';
 import 'package:feed_hub/Utils/colors.dart';
 import 'package:feed_hub/Utils/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class DonateFormVC extends StatefulWidget {
   const DonateFormVC({super.key});
@@ -21,7 +21,7 @@ class _DonateFormVCState extends State<DonateFormVC> {
   final TextEditingController furtherDirectionsController =
       TextEditingController();
   final _formKey = GlobalKey<FormState>();
-
+  final DonationServices _donateItem = DonationServices();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,60 +80,19 @@ class _DonateFormVCState extends State<DonateFormVC> {
                 ),
                 const SizedBox(height: 30),
                 CommonButton(
-                  buttonText: "Submit",
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      Get.defaultDialog(
-                          backgroundColor:
-                              AppColors.whiteColor.withOpacity(0.7),
-                          contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 10),
-                          title: "",
-                          content: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              children: [
-                                const CircleAvatar(
-                                  radius: 40,
-                                  backgroundColor: AppColors.primaryColor,
-                                  child: Icon(Icons.check,
-                                      color: AppColors.whiteColor, size: 50),
-                                ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 8),
-                                  child: Text(
-                                    "Success",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyText1!
-                                        .copyWith(fontSize: 20),
-                                  ),
-                                ),
-                                Text(
-                                  "Your donation request was sent successfully",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline2!
-                                      .copyWith(
-                                        fontSize: 16
-                                      ),
-                                  textAlign: TextAlign.center,
-                                )
-                              ],
-                            ),
-                          ),
-                          confirm: SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            child: CommonButton(
-                                buttonText: "Done",
-                                onPressed: () {
-                                  Get;
-                                }),
-                          ));
-                    }
-                  },
-                )
+                    buttonText: "Submit",
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        await _donateItem.donateItem(
+                          context: context,
+                          dishName: foodNameController.text,
+                          foodQuantity: foodQualityController.text,
+                          pickUpDate: pickUpDateController.text,
+                          pickUpLocation: pickUpLocationController.text,
+                          furtherInfor: furtherDirectionsController.text,
+                        );
+                      }
+                    })
               ],
             ),
           ),
@@ -141,6 +100,4 @@ class _DonateFormVCState extends State<DonateFormVC> {
       ),
     );
   }
-
- 
 }

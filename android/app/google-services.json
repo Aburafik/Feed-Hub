@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "944602773348",
+    "project_id": "feed-hub-5dab3",
+    "storage_bucket": "feed-hub-5dab3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:944602773348:android:e36f9b9985b9eb52342c71",
+        "android_client_info": {
+          "package_name": "com.example.feed_hub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "944602773348-nqefimc4huiflj7115k6vd3jqj0ql27n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvkpw74x3eGzVXlOHjTysV9ZYNW4IySYQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "944602773348-nqefimc4huiflj7115k6vd3jqj0ql27n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
