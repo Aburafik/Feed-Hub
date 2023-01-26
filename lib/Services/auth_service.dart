@@ -109,6 +109,10 @@ class AuthUser {
             isError: true);
         // print('Wrong password provided for that user.');
       }
+    } on SocketException {
+      stopLoading();
+
+      print("nework erro########################");
     } catch (e) {
       stopLoading();
       showSnackbar(
