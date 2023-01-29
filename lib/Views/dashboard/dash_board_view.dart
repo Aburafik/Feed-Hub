@@ -3,6 +3,7 @@ import 'package:feed_hub/Views/donate/donation_history.dart';
 import 'package:feed_hub/Views/home/home.dart';
 import 'package:feed_hub/Views/profile/profile_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 class DashBoardView extends StatefulWidget {
   const DashBoardView({
@@ -24,11 +25,11 @@ class _DashBoardViewState extends State<DashBoardView> {
 
     screens = [
       const HomeVC(),
-       DonationHistoryVC(),
-      ProfileVC(),
+      DonationHistoryVC(),
       const Center(
         child: Text("Home"),
       ),
+      ProfileVC(),
     ];
     super.initState();
   }
@@ -65,11 +66,13 @@ class _DashBoardViewState extends State<DashBoardView> {
         currentIndex: _pageIndex,
         onTap: _setPage,
         items: const [
-          BottomNavigationBarItem(label: "Home", icon: Icon(Icons.home)),
-          BottomNavigationBarItem(label: "History", icon: Icon(Icons.list)),
+          BottomNavigationBarItem(label: "Home", icon: Icon(FeatherIcons.home)),
           BottomNavigationBarItem(
-              label: "Profile", icon: Icon(Icons.person)),
-          BottomNavigationBarItem(label: "Chats", icon: Icon(Icons.chat)),
+              label: "History", icon: Icon(FeatherIcons.list)),
+          BottomNavigationBarItem(
+              label: "Chats", icon: Icon(FeatherIcons.messageSquare)),
+          BottomNavigationBarItem(
+              label: "Profile", icon: Icon(FeatherIcons.user)),
         ],
       ),
     );

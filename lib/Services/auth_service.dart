@@ -6,6 +6,7 @@ import 'package:feed_hub/Utils/router_helper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
+import 'package:get/utils.dart';
 
 class AuthUser {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
@@ -89,7 +90,9 @@ class AuthUser {
           email: emailAddress!, password: password!);
 
       stopLoading();
-      Get.toNamed(RouterHelper.dashBoard);
+      Get.offNamed(GetPlatform.isWeb
+          ? RouterHelper.webDashBoard
+          : RouterHelper.dashBoard);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         stopLoading();

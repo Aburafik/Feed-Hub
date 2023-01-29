@@ -45,6 +45,8 @@ dependencies:
   cloud_firestore: ^4.3.1
   flutter_easyloading: ^3.0.5
   shared_preferences: ^2.0.16
+  flutter_feather_icons: ^2.0.0+1
+  flutter_launcher_icons: ^0.11.0
 
 dev_dependencies:
   flutter_test:
@@ -56,7 +58,19 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  flutter_native_splash: ^2.2.16
 
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/appIcon.png"
+  web:
+    generate: true
+    image_path: "assets/images/appIcon.png"
+
+flutter_native_splash:
+  color: "#7667E4"
+  image: assets/images/logo.png
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

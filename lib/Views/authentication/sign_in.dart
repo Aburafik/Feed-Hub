@@ -1,10 +1,14 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:io';
+
 import 'package:feed_hub/Components/common_button.dart';
 import 'package:feed_hub/Components/form_field.dart';
 import 'package:feed_hub/Services/auth_service.dart';
 import 'package:feed_hub/Services/user_services.dart';
 import 'package:feed_hub/Utils/colors.dart';
+import 'package:feed_hub/Utils/constants.dart';
+import 'package:feed_hub/Utils/images.dart';
 import 'package:feed_hub/Utils/router_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
@@ -24,7 +28,8 @@ class SignIn extends StatelessWidget {
           children: [
             Container(
               height: MediaQuery.of(context).size.height / 3,
-              color: AppColors.primaryColor,
+              color: AppColors.lightGreyColor,
+              child:  appLogo(),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -54,9 +59,10 @@ class SignIn extends StatelessWidget {
                   CommonButton(
                     onPressed: () async {
                       await _authUser.signInUser(
-                          emailAddress: emailController.text,
-                          password: passwordController.text,
-                          context: context);
+                        emailAddress: emailController.text,
+                        password: passwordController.text,
+                        context: context,
+                      );
 
                       await _userServices.getUser();
                     },
@@ -87,4 +93,6 @@ class SignIn extends StatelessWidget {
       ),
     );
   }
+
+ 
 }

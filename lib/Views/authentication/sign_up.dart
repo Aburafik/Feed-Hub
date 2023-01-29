@@ -2,6 +2,7 @@ import 'package:feed_hub/Components/common_button.dart';
 import 'package:feed_hub/Components/form_field.dart';
 import 'package:feed_hub/Services/auth_service.dart';
 import 'package:feed_hub/Utils/colors.dart';
+import 'package:feed_hub/Utils/constants.dart';
 import 'package:feed_hub/Utils/router_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
@@ -22,20 +23,22 @@ class SignUP extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              height: MediaQuery.of(context).size.height / 3,
-              color: AppColors.primaryColor,
+              height: MediaQuery.of(context).size.height / 3.2,
+              color: AppColors.lightGreyColor,
+              child: appLogo()
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.symmetric(horizontal: 8,vertical: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Sign Up",
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText1!
-                          .copyWith(fontSize: 25),
-                          ),
+                  Text(
+                    "Sign Up",
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText1!
+                        .copyWith(fontSize: 25),
+                  ),
                   const SizedBox(height: 20),
                   FormFieldComponent(
                     label: "Full Name",
@@ -59,7 +62,7 @@ class SignUP extends StatelessWidget {
                       controller: phoneController,
                     ),
                   ),
-                   Padding(
+                  Padding(
                     padding: const EdgeInsets.symmetric(vertical: 15),
                     child: FormFieldComponent(
                       label: "Password",
@@ -105,3 +108,6 @@ class SignUP extends StatelessWidget {
     );
   }
 }
+
+
+

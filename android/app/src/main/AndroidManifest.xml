@@ -2,7 +2,7 @@
     package="com.example.feed_hub">
      <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="feed_hub"
+        android:label="FEED HUB"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

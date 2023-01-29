@@ -1,5 +1,6 @@
 import 'package:feed_hub/Components/common_button.dart';
 import 'package:feed_hub/Utils/colors.dart';
+import 'package:feed_hub/Utils/images.dart';
 import 'package:feed_hub/Utils/router_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
@@ -121,3 +122,13 @@ donateSuccessMessage({BuildContext? context}) {
             }),
       ));
 }
+
+ Center appLogo() {
+    return const Center(
+              child: CircleAvatar(
+                radius: 80,
+                backgroundColor: AppColors.lightGreyColor,
+                backgroundImage: AssetImage(Images.logo),
+              ),
+            );
+  }
