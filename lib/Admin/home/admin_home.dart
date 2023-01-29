@@ -1,12 +1,15 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:feed_hub/Admin/donations/recent_donations.dart';
 import 'package:feed_hub/Components/common_button.dart';
+import 'package:feed_hub/Controllers/getData_controller.dart';
 import 'package:feed_hub/Utils/colors.dart';
 import 'package:feed_hub/Utils/router_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:get/instance_manager.dart';
 import 'package:get/route_manager.dart';
 
 class AdminHomeVC extends StatelessWidget {
-  const AdminHomeVC({super.key});
+  AdminHomeVC({super.key});
+  final DataController dataController = Get.put(DataController());
 
   @override
   Widget build(BuildContext context) {
@@ -19,125 +22,46 @@ class AdminHomeVC extends StatelessWidget {
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
+                children: [
                   DashBoardSummaryCard(
                     title: "Total NGOs",
-                    subTitle: "30",
+                    subTitle: dataController.allNGOs.toString(),
                     icon: Icons.person_add,
                   ),
                   DashBoardSummaryCard(
                     title: "Total Users",
-                    subTitle: "10",
+                    subTitle: dataController.allUsers.toString(),
                     icon: Icons.person_add,
                   ),
                   DashBoardSummaryCard(
                     title: "Total Donations",
-                    subTitle: "40",
+                    subTitle: dataController.allDonations.toString(),
                     icon: Icons.person_add,
                   ),
                 ],
               ),
-              RecentDonationsComponent()
+              Expanded(child: RecentDonationsComponent())
             ],
           )),
     );
   }
 }
 
-class RecentDonationsComponent extends StatelessWidget {
-  RecentDonationsComponent({
-    Key? key,
-  }) : super(key: key);
-  final Stream<QuerySnapshot> recentDonations =
-      FirebaseFirestore.instance.collection('AllDonations').snapshots();
-
+class DetailsWidgetComponent extends StatelessWidget {
+  const DetailsWidgetComponent({Key? key, this.leading, this.trailing})
+      : super(key: key);
+  final String? trailing;
+  final String? leading;
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 15),
-      child: Card(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-              child: Row(
-                children: [
-                  Text("Recent Donations",
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText1!
-                          .copyWith(fontWeight: FontWeight.bold, fontSize: 20)),
-                ],
-              ),
-            ),
-            StreamBuilder<QuerySnapshot>(
-              stream: recentDonations,
-              builder: ((context, snapshot) {
-                if (snapshot.hasData) {
-                  final donations = snapshot.data!.docs;
-
-                  print(donations.map((e) => e['dishName']));
-                  return DataTable(
-                      dataTextStyle: Theme.of(context)
-                          .textTheme
-                          .bodyText1!
-                          .copyWith(
-                              color: Colors.black, fontWeight: FontWeight.bold),
-                      headingTextStyle: Theme.of(context)
-                          .textTheme
-                          .bodyText1!
-                          .copyWith(color: const Color(0xff747889)),
-                      headingRowHeight: 30,
-                      horizontalMargin: 20,
-                      headingRowColor: MaterialStateProperty.all(
-                          AppColors.adminPrimaryColor),
-                      columns: const [
-                        DataColumn(label: Expanded(child: Text("Sender Name"))),
-                        DataColumn(label: Text("Sender Location")),
-                        DataColumn(label: Text("Sender Contact")),
-                        DataColumn(label: Text("NGO Donated To")),
-                        DataColumn(label: Text("PickUp Location")),
-                        DataColumn(label: Text("Donation Details")),
-                      ],
-                      rows: donations
-                          .map((e) => DataRow(cells: [
-                                DataCell(Text(e['senderName'])),
-                                DataCell(Text(e["senderLocation"])),
-                                DataCell(Text(e["senderLocation"])),
-                                DataCell(Text(e["senderContact"])),
-                                DataCell(Text(e["pickUpLocation"])),
-                                DataCell(
-                                  GestureDetector(
-                                    onTap: () {
-                                      // print(e['senderLocation']);
-                                      donateSuccessMessage(context: context);
-                                    },
-                                    child: Material(
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(5)),
-                                        color: AppColors.activeColor,
-                                        child: const Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 5, horizontal: 15),
-                                          child: Text("View"),
-                                        )),
-                                  ),
-                                ),
-                              ]))
-                          .toList());
-                } else {
-                  return const Expanded(
-                    child: Center(
-                      child: Text("No Data"),
-                    ),
-                  );
-                }
-              }),
-            )
-          ],
-        ),
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(leading!),
+          Text(trailing!),
+        ],
       ),
     );
   }

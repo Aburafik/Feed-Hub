@@ -3,6 +3,7 @@ import 'package:feed_hub/Utils/colors.dart';
 import 'package:feed_hub/Utils/images.dart';
 import 'package:feed_hub/Utils/router_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
@@ -74,6 +75,8 @@ stopLoading() {
 showSnackbar({String? messsage, BuildContext? context, bool isError = false}) {
   ScaffoldMessenger.of(context!).showSnackBar(
     SnackBar(
+      // behavior: SnackBarBehavior.,
+      // width: GetPlatform.isDesktop?100:null,
       content: Text(messsage!),
       backgroundColor: isError ? Colors.red : AppColors.primaryColor,
     ),
@@ -123,12 +126,12 @@ donateSuccessMessage({BuildContext? context}) {
       ));
 }
 
- Center appLogo() {
-    return const Center(
-              child: CircleAvatar(
-                radius: 80,
-                backgroundColor: AppColors.lightGreyColor,
-                backgroundImage: AssetImage(Images.logo),
-              ),
-            );
-  }
+Center appLogo() {
+  return const Center(
+    child: CircleAvatar(
+      radius: 80,
+      backgroundColor: AppColors.lightGreyColor,
+      backgroundImage: AssetImage(Images.logo),
+    ),
+  );
+}

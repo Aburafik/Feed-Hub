@@ -1,6 +1,8 @@
-import 'package:feed_hub/Admin/donations/admin_donations.dart';
+import 'package:feed_hub/Admin/donations/all_donations.dart';
+import 'package:feed_hub/Admin/donations/recent_donations.dart';
 import 'package:feed_hub/Admin/home/admin_home.dart';
 import 'package:feed_hub/Admin/ngos/ngos_home.dart';
+import 'package:feed_hub/Admin/pushNotifications/push_notifications.dart';
 import 'package:feed_hub/Admin/users/users_home.dart';
 import 'package:feed_hub/Utils/colors.dart';
 import 'package:feed_hub/Utils/router_helper.dart';
@@ -8,6 +10,7 @@ import 'package:feed_hub/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:get/get.dart';
 
 void main() async {
@@ -27,7 +30,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       builder: EasyLoading.init(),
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'FEED HUB ADMIN',
       theme: ThemeData(
         scaffoldBackgroundColor: AppColors.backGroundColor,
         appBarTheme: const AppBarTheme(
@@ -40,9 +43,8 @@ class MyApp extends StatelessWidget {
           iconTheme: IconThemeData(color: AppColors.whiteColor),
         ),
       ),
-      initialRoute: GetPlatform.isWeb
-          ? RouterHelper.adminLogin
-          : RouterHelper.signIn,
+      initialRoute:
+          GetPlatform.isWeb ? RouterHelper.adminLogin : RouterHelper.signIn,
       getPages: RouterHelper.router,
     );
   }
@@ -68,6 +70,10 @@ List tabs = [
     "title": "USERS",
     "icon": Icon(Icons.person, color: Colors.grey[300]),
   },
+  {
+    "title": "PUSH NOTIFICATIONS",
+    "icon": Icon(Icons.person, color: Colors.grey[300]),
+  },
 ];
 
 class WebDashboardVC extends StatefulWidget {
@@ -84,6 +90,7 @@ class _WebDashboardVCState extends State<WebDashboardVC> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             height: 50,
@@ -93,12 +100,15 @@ class _WebDashboardVCState extends State<WebDashboardVC> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  "FEEDHUB ADMIN",
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.whiteColor),
+                Padding(
+                  padding: const EdgeInsets.only(left: 30),
+                  child: Text(
+                    "FEEDHUB ADMIN",
+                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.whiteColor),
+                  ),
                 ),
               ],
             ),
@@ -109,39 +119,62 @@ class _WebDashboardVCState extends State<WebDashboardVC> {
                 Drawer(
                   width: 300,
                   backgroundColor: AppColors.adminPrimaryColor,
-                  child: Column(children: [
-                    Column(
-                      children: tabs
-                          .map(
-                            (e) => Card(
-                              elevation: 0,
-                              margin: const EdgeInsets.symmetric(
-                                  vertical: 20, horizontal: 10),
-                              color: selectedTab == e['title']
-                                  ? AppColors.adminPrimaryLightColor
-                                  : AppColors.adminPrimaryColor,
-                              child: ListTile(
-                                  onTap: () {
-                                    setState(() => selectedTab = e['title']);
-                                  },
-                                  title: Text(
-                                    "${e['title']}",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyText1!
-                                        .copyWith(color: Colors.grey[300]),
-                                  ),
-                                  trailing: Icon(
-                                    Icons.arrow_forward_ios,
-                                    color: Colors.grey[300],
-                                  ),
-                                  leading: e['icon']),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: tabs
+                              .map(
+                                (e) => Card(
+                                  elevation: 0,
+                                  margin: const EdgeInsets.symmetric(
+                                      vertical: 20, horizontal: 10),
+                                  color: selectedTab == e['title']
+                                      ? AppColors.adminPrimaryLightColor
+                                      : AppColors.adminPrimaryColor,
+                                  child: ListTile(
+                                      onTap: () {
+                                        setState(
+                                            () => selectedTab = e['title']);
+                                      },
+                                      title: Text(
+                                        "${e['title']}",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText1!
+                                            .copyWith(color: Colors.grey[300]),
+                                      ),
+                                      trailing: Icon(
+                                        Icons.arrow_forward_ios,
+                                        color: Colors.grey[300],
+                                      ),
+                                      leading: e['icon']),
+                                ),
+                              )
+                              .toList(),
+                        ),
+                        Card(
+                          elevation: 0,
+                          color: AppColors.adminPrimaryColor,
+                          child: ListTile(
+                            onTap: () {
+                              Get.offNamed(RouterHelper.adminLogin);
+                            },
+                            title: Text(
+                              "LOGOUT",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1!
+                                  .copyWith(color: Colors.grey[300]),
                             ),
-                          )
-                          .toList(),
-                    ),
-                    const Text("LOGOUT")
-                  ]),
+                            leading: Icon(
+                              FeatherIcons.logOut,
+                              color: Colors.grey[300],
+                            ),
+                          ),
+                        )
+                      ]),
                 ),
                 Expanded(child: layOutViewScreen(page: selectedTab))
               ],
@@ -156,17 +189,19 @@ class _WebDashboardVCState extends State<WebDashboardVC> {
 layOutViewScreen({String? page}) {
   switch (page) {
     case "HOME":
-      return const AdminHomeVC();
+      return AdminHomeVC();
     case "NGOs":
-      return const NgOsHomeVC();
+      return  NgOsHomeVC();
 
     case "DONATIONS":
-      return const AdminDonationsVC();
+      return AllDonations();
 
     case "USERS":
-      return const UsersHomeVC();
+      return UsersHomeVC();
+    case "PUSH NOTIFICATIONS":
+      return PushNotifications();
 
     case "":
-      return const AdminHomeVC();
+      return AdminHomeVC();
   }
 }

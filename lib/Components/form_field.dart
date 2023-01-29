@@ -1,4 +1,4 @@
- import 'package:feed_hub/Utils/colors.dart';
+import 'package:feed_hub/Utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class FormFieldComponent extends StatelessWidget {
@@ -7,16 +7,21 @@ class FormFieldComponent extends StatelessWidget {
       this.controller,
       this.label,
       this.errorMessage,
-      this.validateForm = true})
-      : super(key: key);
+      this.validateForm = true,
+      this.maxLines = 1})
+      : super(
+          key: key,
+        );
 
   final TextEditingController? controller;
   final String? label;
   final String? errorMessage;
   final bool? validateForm;
+  final int? maxLines;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      maxLines: maxLines,
       validator: validateForm!
           ? (value) {
               if (value!.isEmpty) {
