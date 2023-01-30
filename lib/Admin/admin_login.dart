@@ -7,7 +7,8 @@ class AdminLogin extends StatelessWidget {
   AdminLogin({super.key});
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  AuthUser _authUser = AuthUser();
+  final _formKey = GlobalKey<FormState>();
+  final AuthUser _authUser = AuthUser();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,41 +18,46 @@ class AdminLogin extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
             child: SizedBox(
               width: MediaQuery.of(context).size.width / 3,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 30),
-                    child: Text(
-                      "FEED HUB Admin",
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText1!
-                          .copyWith(fontSize: 35, fontWeight: FontWeight.bold),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 30),
+                      child: Text(
+                        "FEED HUB Admin",
+                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                            fontSize: 35, fontWeight: FontWeight.bold),
+                      ),
                     ),
-                  ),
-                  FormFieldComponent(
-                    label: "email",
-                    controller: emailController,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 20),
-                    child: FormFieldComponent(
+                    FormFieldComponent(
+                      errorMessage: "Email",
                       label: "email",
-                      controller: passwordController,
+                      controller: emailController,
                     ),
-                  ),
-                  CommonButton(
-                    onPressed: () async {
-                      _authUser.signInUser(
-                          emailAddress: emailController.text,
-                          password: passwordController.text,
-                          context: context);
-                    },
-                    buttonText: "Log In",
-                  ),
-                  SizedBox(height: 10)
-                ],
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      child: FormFieldComponent(
+                        errorMessage: "Password",
+                        label: "Password",
+                        controller: passwordController,
+                      ),
+                    ),
+                    CommonButton(
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          _authUser.signInUser(
+                              emailAddress: emailController.text,
+                              password: passwordController.text,
+                              context: context);
+                        }
+                      },
+                      buttonText: "Log In",
+                    ),
+                    const SizedBox(height: 10)
+                  ],
+                ),
               ),
             ),
           ),

@@ -1,5 +1,4 @@
 import 'package:feed_hub/Admin/donations/all_donations.dart';
-
 import 'package:feed_hub/Admin/home/admin_home.dart';
 import 'package:feed_hub/Admin/ngos/ngos_home.dart';
 import 'package:feed_hub/Admin/pushNotifications/push_notifications.dart';
@@ -53,26 +52,28 @@ class MyApp extends StatelessWidget {
 List tabs = [
   {
     "title": "HOME",
-    "icon": Icon(
-      Icons.home,
-      color: Colors.grey[300],
-    ),
+    "icon": Icon(FeatherIcons.home, color: Colors.grey[300], size: 20),
   },
   {
     "title": "NGOs",
-    "icon": Icon(Icons.crop_original_rounded, color: Colors.grey[300]),
+    "icon":
+        Icon(FeatherIcons.square, color: Colors.grey[300], size: 20),
   },
   {
     "title": "DONATIONS",
-    "icon": Icon(Icons.donut_large, color: Colors.grey[300]),
+    "icon": Icon(Icons.donut_large, color: Colors.grey[300], size: 20),
   },
   {
     "title": "USERS",
-    "icon": Icon(Icons.person, color: Colors.grey[300]),
+    "icon": Icon(
+      FeatherIcons.user,
+      color: Colors.grey[300],
+      size: 20,
+    ),
   },
   {
     "title": "PUSH NOTIFICATIONS",
-    "icon": Icon(Icons.person, color: Colors.grey[300]),
+    "icon": Icon(FeatherIcons.bell, color: Colors.grey[300], size: 20),
   },
 ];
 
@@ -147,7 +148,7 @@ class _WebDashboardVCState extends State<WebDashboardVC> {
                                       ),
                                       trailing: Icon(
                                         Icons.arrow_forward_ios,
-                                        color: Colors.grey[300],
+                                        color: Colors.grey[300],size: 20
                                       ),
                                       leading: e['icon']),
                                 ),
@@ -191,7 +192,7 @@ layOutViewScreen({String? page}) {
     case "HOME":
       return AdminHomeVC();
     case "NGOs":
-      return  NgOsHomeVC();
+      return NgOsHomeVC();
 
     case "DONATIONS":
       return AllDonations();

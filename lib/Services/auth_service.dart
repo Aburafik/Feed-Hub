@@ -114,7 +114,10 @@ class AuthUser {
       }
     } on SocketException {
       stopLoading();
-
+      showSnackbar(
+          context: context,
+          messsage: "Opps, Check your internet connection!",
+          isError: true);
       print("nework erro########################");
     } catch (e) {
       stopLoading();
