@@ -1,13 +1,15 @@
+import 'package:feed_hub/Controllers/organizations_controller.dart';
 import 'package:feed_hub/Utils/colors.dart';
 import 'package:feed_hub/Utils/images.dart';
 import 'package:feed_hub/Utils/router_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_instance/get_instance.dart';
 import 'package:get/route_manager.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class HomeVC extends StatelessWidget {
-  const HomeVC({super.key});
-
+  HomeVC({super.key});
+  final OrganizationsController controller = Get.find<OrganizationsController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +30,7 @@ class HomeVC extends StatelessWidget {
                 child: ListView.builder(
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
-                    itemCount: 5,
+                    itemCount: controller.organizations.length,
                     itemBuilder: (context, index) {
                       return const NGosCard();
                     }),
@@ -40,7 +42,7 @@ class HomeVC extends StatelessWidget {
               ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: 3,
+                  itemCount: controller.organizations.length,
                   itemBuilder: (context, index) {
                     return const OtherRequestCardComponent();
                   })

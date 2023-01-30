@@ -8,17 +8,37 @@ import 'package:feed_hub/Services/auth_service.dart';
 import 'package:feed_hub/Services/user_services.dart';
 import 'package:feed_hub/Utils/colors.dart';
 import 'package:feed_hub/Utils/constants.dart';
-import 'package:feed_hub/Utils/images.dart';
+import 'package:get/get_instance/get_instance.dart';
+import 'package:feed_hub/Controllers/organizations_controller.dart';
+
 import 'package:feed_hub/Utils/router_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 
-class SignIn extends StatelessWidget {
+class SignIn extends StatefulWidget {
   SignIn({super.key});
+
+  @override
+  State<SignIn> createState() => _SignInState();
+}
+
+class _SignInState extends State<SignIn> {
   final TextEditingController passwordController = TextEditingController();
+
   final TextEditingController emailController = TextEditingController();
+
   final UserServices _userServices = UserServices();
+
   final AuthUser _authUser = AuthUser();
+
+  OrganizationsController controller = Get.put(OrganizationsController());
+  @override
+  void initState() {
+    controller.fetchAllOrganizations();
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     TextStyle style = Theme.of(context).textTheme.bodyText1!;
@@ -29,7 +49,7 @@ class SignIn extends StatelessWidget {
             Container(
               height: MediaQuery.of(context).size.height / 3,
               color: AppColors.lightGreyColor,
-              child:  appLogo(),
+              child: appLogo(),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -93,6 +113,4 @@ class SignIn extends StatelessWidget {
       ),
     );
   }
-
- 
 }
