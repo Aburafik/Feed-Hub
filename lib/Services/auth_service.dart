@@ -11,6 +11,8 @@ import 'package:get/utils.dart';
 class AuthUser {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   CollectionReference users = FirebaseFirestore.instance.collection('users');
+  CollectionReference chats =
+    FirebaseFirestore.instance.collection('questionsAndAnswers');
   addUser(
       {String? fullName,
       String? email,
@@ -128,4 +130,26 @@ class AuthUser {
       print(e);
     }
   }
+
+
+
+  Future sendQuestion(
+      {String? senderEmail,
+      String? senderName,
+      String? senderContact,
+      String? question,
+      String? senderImageUrl,
+      BuildContext? context,
+      String? id}) async {
+    return chats.add({
+      'full_name': senderName,
+      'email': senderEmail,
+      'contact': senderContact,
+      'question': question,
+      "image_url": senderImageUrl,
+      "senderId": id,
+      'created_at': Timestamp.now().millisecondsSinceEpoch,
+    });
+  }
+  
 }

@@ -1,9 +1,11 @@
 import 'package:feed_hub/Components/common_button.dart';
 import 'package:feed_hub/Components/form_field.dart';
+import 'package:feed_hub/Controllers/organizations_controller.dart';
 import 'package:feed_hub/Services/donate_services.dart';
 import 'package:feed_hub/Utils/colors.dart';
 import 'package:feed_hub/Utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:get/instance_manager.dart';
 
 class DonateFormVC extends StatefulWidget {
   const DonateFormVC({super.key});
@@ -91,6 +93,7 @@ class _DonateFormVCState extends State<DonateFormVC> {
                           pickUpLocation: pickUpLocationController.text,
                           furtherInfor: furtherDirectionsController.text,
                         );
+                        Get.put(OrganizationsController());
                       }
                     })
               ],

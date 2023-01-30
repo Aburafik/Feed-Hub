@@ -8,19 +8,20 @@ import 'package:get/route_manager.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class NGoDetailsImageHolderComponent extends StatelessWidget {
-  const NGoDetailsImageHolderComponent({
-    Key? key,
-  }) : super(key: key);
-
+  const NGoDetailsImageHolderComponent({Key? key, this.imageUrl})
+      : super(key: key);
+  final String? imageUrl;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: MediaQuery.of(context).size.height / 3,
       child: Stack(children: [
-        // Image.asset(Images.img)
 
         Container(
-          color: Colors.red,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+                image: NetworkImage(imageUrl!), fit: BoxFit.fill),
+          ),
         ),
         SafeArea(
           child: IconButton(

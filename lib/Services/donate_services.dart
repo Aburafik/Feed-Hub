@@ -57,8 +57,6 @@ class DonationServices {
     String? image,
     BuildContext? context,
   }) async {
-    startLoading();
-
     try {
       await organizations.add({
         "organizationName": organizationName,

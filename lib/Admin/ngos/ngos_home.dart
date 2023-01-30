@@ -5,6 +5,7 @@ import 'package:feed_hub/Components/form_field.dart';
 import 'package:feed_hub/Controllers/getData_controller.dart';
 import 'package:feed_hub/Services/donate_services.dart';
 import 'package:feed_hub/Utils/colors.dart';
+import 'package:feed_hub/Utils/constants.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -203,14 +204,14 @@ class _AddNewNGoComponentState extends State<AddNewNGoComponent> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20),
               child: FormFieldComponent(
-                maxLines: 4,
-                label: "Organization Description",
-                controller: organizationDescriptionController,
+                label: "Organization Location",
+                controller: organizationLocationController,
               ),
             ),
             FormFieldComponent(
-              label: "Organization Location",
-              controller: organizationLocationController,
+              maxLines: 4,
+              label: "Organization Description",
+              controller: organizationDescriptionController,
             ),
             const SizedBox(height: 15),
             const Text("Upload Organization Logo"),
@@ -227,6 +228,7 @@ class _AddNewNGoComponentState extends State<AddNewNGoComponent> {
               child: CommonButton(
                 buttonText: "UPLOAD",
                 onPressed: () async {
+                  startLoading();
                   await _uploadFile();
 
                   await donationServices.uploadNewNGO(

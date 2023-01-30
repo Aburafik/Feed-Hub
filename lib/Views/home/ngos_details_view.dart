@@ -1,5 +1,6 @@
 import 'package:feed_hub/Views/home/home.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class AllOrganizationsListVC extends StatelessWidget {
   const AllOrganizationsListVC({super.key});
@@ -9,9 +10,11 @@ class AllOrganizationsListVC extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text("All Organizations")),
       body: ListView.builder(
-          itemCount: 10,
+          itemCount: Get.arguments.length,
           itemBuilder: (context, index) {
-            return const OtherRequestCardComponent();
+            return OtherRequestCardComponent(
+              organizations: Get.arguments[index],
+            );
           }),
     );
   }

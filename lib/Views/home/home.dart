@@ -24,7 +24,8 @@ class HomeVC extends StatelessWidget {
               const HomeBanner(),
               HomeHeadingComponent(
                 leading: "Recent NGOs Request",
-                onTap: () => Get.toNamed(RouterHelper.allNgoListView),
+                onTap: () => Get.toNamed(RouterHelper.allNgoListView,
+                    arguments: controller.organizations),
               ),
               SizedBox(
                 height: 230,
@@ -33,17 +34,21 @@ class HomeVC extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     itemCount: controller.organizations.length,
                     itemBuilder: (context, index) {
-                      return const NGosCard();
+                      return NGosCard(
+                        recentOrganizations: controller.organizations[index],
+                        organizations: controller.organizations,
+                      );
                     }),
               ),
               HomeHeadingComponent(
                 leading: "Others Request",
-                onTap: () => Get.toNamed(RouterHelper.allNgoListView),
+                onTap: () => Get.toNamed(RouterHelper.allNgoListView,
+                    arguments: controller.organizations),
               ),
               ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: controller.organizations.length,
+                  itemCount: controller.organizations.length > 3 ? 3 : 2,
                   itemBuilder: (context, index) {
                     return OtherRequestCardComponent(
                       organizations: controller.organizations[index],
@@ -66,8 +71,8 @@ class OtherRequestCardComponent extends StatelessWidget {
     TextStyle style = Theme.of(context).textTheme.bodyText1!;
 
     return GestureDetector(
-      onTap: () => Get.toNamed(RouterHelper.homeDetailsView,
-          parameters: {"organozation": organizations.toString()}),
+      onTap: () =>
+          Get.toNamed(RouterHelper.homeDetailsView, arguments: organizations),
       child: Card(
         child: SizedBox(
           height: 100,
@@ -90,20 +95,22 @@ class OtherRequestCardComponent extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    organizations['location'],
+                    organizations['organizationName'],
                     style: style.copyWith(
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
                         color: Colors.black),
                   ),
                   Row(
-                    children: const [
+                    children: [
                       Icon(
                         Icons.location_on,
                         size: 15,
                         color: Colors.grey,
                       ),
-                      Text("Kasoa")
+                      Text(
+                        organizations['location'],
+                      )
                     ],
                   ),
                   Row(
@@ -159,67 +166,76 @@ class HomeHeadingComponent extends StatelessWidget {
 }
 
 class NGosCard extends StatelessWidget {
-  const NGosCard({
-    Key? key,
-  }) : super(key: key);
-
+  const NGosCard({Key? key, this.recentOrganizations, this.organizations})
+      : super(key: key);
+  final dynamic recentOrganizations;
+  final dynamic organizations;
   @override
   Widget build(BuildContext context) {
     TextStyle style = Theme.of(context).textTheme.bodyText1!;
     return GestureDetector(
-      onTap: () => Get.toNamed(RouterHelper.homeDetailsView),
+      onTap: () => Get.toNamed(RouterHelper.homeDetailsView,
+          arguments: recentOrganizations),
       child: Card(
         child: SizedBox(
           height: 220,
           width: 200,
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Image.asset(Images.img),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Feed Hungry Child",
-                        style: style.copyWith(fontSize: 15),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      const Text("Child Care Foundation"),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 15, bottom: 5),
-                        child: LinearPercentIndicator(
-                          padding: EdgeInsets.zero,
-                          barRadius: const Radius.circular(5),
-                          width: 180,
-                          lineHeight: 5.0,
-                          percent: 0.6,
-                          backgroundColor: Colors.grey[300],
-                          progressColor: AppColors.primaryColor,
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Target: 50",
-                            style: style,
+          child: Column(
+            children: [
+              Expanded(
+                child: Container(
+                 
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: NetworkImage(
+                            recentOrganizations['image'],
                           ),
-                          Text("65%",
-                              style: style.copyWith(
-                                color: AppColors.primaryColor,
-                              ))
-                        ],
+                          fit: BoxFit.contain)),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Feed Hungry Child",
+                      style: style.copyWith(fontSize: 15),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    const Text("Child Care Foundation"),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 15, bottom: 5),
+                      child: LinearPercentIndicator(
+                        padding: EdgeInsets.zero,
+                        barRadius: const Radius.circular(5),
+                        width: 180,
+                        lineHeight: 5.0,
+                        percent: 0.6,
+                        backgroundColor: Colors.grey[300],
+                        progressColor: AppColors.primaryColor,
                       ),
-                    ],
-                  ),
-                )
-              ],
-            ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Target: 50",
+                          style: style,
+                        ),
+                        Text("65%",
+                            style: style.copyWith(
+                              color: AppColors.primaryColor,
+                            ))
+                      ],
+                    ),
+                  ],
+                ),
+              )
+            ],
           ),
         ),
       ),

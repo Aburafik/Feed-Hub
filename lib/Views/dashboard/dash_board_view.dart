@@ -1,3 +1,4 @@
+import 'package:feed_hub/Views/chats/chats.dart';
 import 'package:feed_hub/Utils/colors.dart';
 import 'package:feed_hub/Views/donate/donation_history.dart';
 import 'package:feed_hub/Views/home/home.dart';
@@ -9,7 +10,6 @@ class DashBoardView extends StatefulWidget {
   const DashBoardView({
     super.key,
   });
-  // final int? pageIndex;
   @override
   State<DashBoardView> createState() => _DashBoardViewState();
 }
@@ -24,11 +24,9 @@ class _DashBoardViewState extends State<DashBoardView> {
     _pageController = PageController(initialPage: _pageIndex);
 
     screens = [
-       HomeVC(),
+      HomeVC(),
       DonationHistoryVC(),
-      const Center(
-        child: Text("Home"),
-      ),
+      Chats(),
       ProfileVC(),
     ];
     super.initState();

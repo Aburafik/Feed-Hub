@@ -19,39 +19,8 @@ class DonationHistoryVC extends StatelessWidget {
                 itemCount: snapshot.data!.docs.length,
                 itemBuilder: (context, index) {
                   dynamic data = snapshot.data!.docs[index].data();
-                  return data["userId"] == userId
-                      ? Card(
-                          child: ListTile(
-                            title: const Text("Donated to:"),
-                            subtitle: const Text("erjfjnfvjf"),
-                            leading: const Icon(
-                              Icons.check_circle_outline,
-                            ),
-                            trailing: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Material(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(3)),
-                                  color: data['status']
-                                      ? Colors.green
-                                      : const Color(0xffF7682B),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 2, horizontal: 5),
-                                    child: Text(
-                                      data['status'] ? "Recieved" : "Pending",
-                                      style: const TextStyle(
-                                          fontSize: 10, color: Colors.white),
-                                    ),
-                                  ),
-                                ),
-                                const Icon(Icons.more_horiz),
-                              ],
-                            ),
-                          ),
-                        )
-                      : Column(
+                  return !data["userId"].toString().contains(userId)
+                      ? Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             SizedBox(
@@ -63,7 +32,45 @@ class DonationHistoryVC extends StatelessWidget {
                             ),
                             const Text("No Donaton Histroy"),
                           ],
-                        );
+                        )
+                      : data["userId"] == userId
+                          ? Card(
+                              child: ListTile(
+                                title: const Text("Donated to:"),
+                                subtitle: const Text("erjfjnfvjf"),
+                                leading: const Icon(
+                                  Icons.check_circle_outline,
+                                ),
+                                trailing: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Material(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(3)),
+                                      color: data['status']
+                                          ? Colors.green
+                                          : const Color(0xffF7682B),
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 2, horizontal: 5),
+                                        child: Text(
+                                          data['status']
+                                              ? "Recieved"
+                                              : "Pending",
+                                          style: const TextStyle(
+                                              fontSize: 10,
+                                              color: Colors.white),
+                                        ),
+                                      ),
+                                    ),
+                                    const Icon(Icons.more_horiz),
+                                  ],
+                                ),
+                              ),
+                            )
+                          : Wrap();
                 });
           } else {
             return const Center(
@@ -75,3 +82,16 @@ class DonationHistoryVC extends StatelessWidget {
     );
   }
 }
+// Column(
+//                           mainAxisAlignment: MainAxisAlignment.center,
+//                           children: [
+//                             SizedBox(
+//                                 height:
+//                                     MediaQuery.of(context).size.height / 2.5),
+//                             Image.asset(
+//                               Images.folder,
+//                               height: 80,
+//                             ),
+//                             const Text("No Donaton Histroy"),
+//                           ],
+//                         );

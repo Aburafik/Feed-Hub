@@ -53,6 +53,8 @@ dependencies:
   mime_type: ^1.0.0
   path: any
   file_picker: ^5.2.5
+  bubble: ^1.2.1
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:

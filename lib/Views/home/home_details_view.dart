@@ -21,7 +21,9 @@ class HomeDetailsView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const NGoDetailsImageHolderComponent(),
+            NGoDetailsImageHolderComponent(
+              imageUrl: Get.arguments['image']!.toString(),
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -29,13 +31,22 @@ class HomeDetailsView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Text(
-                    "  Get.parameters['location']!.toString(),",
+                    Get.arguments['organizationName']!.toString(),
                     style: style.copyWith(fontSize: 20),
                   ),
                   const SizedBox(height: 10),
-                  Text(
-                    "Child Welfare Home",
-                    style: style,
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.location_on,
+                        size: 15,
+                        color: Colors.grey,
+                      ),
+                      Text(
+                        Get.arguments['location']!.toString(),
+                        style: style,
+                      ),
+                    ],
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10, bottom: 30),
@@ -59,28 +70,28 @@ class HomeDetailsView extends StatelessWidget {
                     "About NGO",
                     style: style.copyWith(fontSize: 20),
                   ),
-                  const ReadMoreText(
-                      'Flutter is Google’s mobile UI open jehbfghjbghrthrththjtnhtrnhjrtngjnjgnjrfgrturbghtgbhrbghrbghbrtbghrtbghrtgrtuguhrtbreghjbrhjbghjefbhjbfehgfhjefbgfhjebghbehjgbfbfdgedsource framework to build high-quality native (super fast) interfaces for iOS and Android apps with the unified codebase.',
+                  ReadMoreText(
+                      Get.arguments['organizationDescription']!.toString(),
                       trimLines: 2,
                       trimMode: TrimMode.Line,
                       trimCollapsedText: 'Read more',
                       trimExpandedText: 'Show less',
                       moreStyle: expandedStyle,
                       lessStyle: expandedStyle),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 15),
-                    child: SizedBox(
-                      height: MediaQuery.of(context).size.height / 12,
-                      child: ListView.builder(
-                        itemCount: 6,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: ((context, index) =>
-                            const NgoImagesCard()),
-                      ),
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(top: 15),
+                  //   child: SizedBox(
+                  //     height: MediaQuery.of(context).size.height / 12,
+                  //     child: ListView.builder(
+                  //       itemCount: 6,
+                  //       scrollDirection: Axis.horizontal,
+                  //       itemBuilder: ((context, index) =>
+                  //           const NgoImagesCard()),
+                  //     ),
+                  //   ),
+                  // ),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height / 4,
+                    height: MediaQuery.of(context).size.height / 3,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [

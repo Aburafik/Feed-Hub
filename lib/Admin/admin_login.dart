@@ -1,6 +1,7 @@
 import 'package:feed_hub/Components/common_button.dart';
 import 'package:feed_hub/Components/form_field.dart';
 import 'package:feed_hub/Services/auth_service.dart';
+import 'package:feed_hub/Services/user_services.dart';
 import 'package:flutter/material.dart';
 
 class AdminLogin extends StatelessWidget {
@@ -9,6 +10,8 @@ class AdminLogin extends StatelessWidget {
   TextEditingController passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   final AuthUser _authUser = AuthUser();
+  final UserServices _userServices = UserServices();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,6 +54,7 @@ class AdminLogin extends StatelessWidget {
                               emailAddress: emailController.text,
                               password: passwordController.text,
                               context: context);
+                          await _userServices.getUser();
                         }
                       },
                       buttonText: "Log In",

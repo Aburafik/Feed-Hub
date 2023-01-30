@@ -32,6 +32,7 @@ class _SignInState extends State<SignIn> {
   final AuthUser _authUser = AuthUser();
 
   OrganizationsController controller = Get.put(OrganizationsController());
+  final _formKey = GlobalKey<FormState>();
   @override
   void initState() {
     controller.fetchAllOrganizations();
@@ -53,59 +54,66 @@ class _SignInState extends State<SignIn> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Sign In",
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1!
-                        .copyWith(fontSize: 25),
-                  ),
-                  const SizedBox(height: 20),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 15),
-                    child: FormFieldComponent(
-                      label: "Email",
-                      controller: emailController,
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Sign In",
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText1!
+                          .copyWith(fontSize: 25),
                     ),
-                  ),
-                  FormFieldComponent(
-                    label: "Password",
-                    controller: passwordController,
-                  ),
-                  const SizedBox(height: 40),
-                  CommonButton(
-                    onPressed: () async {
-                      await _authUser.signInUser(
-                        emailAddress: emailController.text,
-                        password: passwordController.text,
-                        context: context,
-                      );
+                    const SizedBox(height: 20),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 15),
+                      child: FormFieldComponent(
+                        errorMessage: "Email",
+                        label: "Email",
+                        controller: emailController,
+                      ),
+                    ),
+                    FormFieldComponent(
+                      errorMessage: "Password",
+                      label: "Password",
+                      controller: passwordController,
+                    ),
+                    const SizedBox(height: 40),
+                    CommonButton(
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          await _authUser.signInUser(
+                            emailAddress: emailController.text,
+                            password: passwordController.text,
+                            context: context,
+                          );
 
-                      await _userServices.getUser();
-                    },
-                    buttonText: "Sign In",
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        const Text("Don't have an account?"),
-                        GestureDetector(
-                          onTap: () => Get.toNamed(RouterHelper.signUp),
-                          child: Text(
-                            "Sign Up",
-                            style:
-                                style.copyWith(color: AppColors.primaryColor),
-                          ),
-                        )
-                      ],
+                          await _userServices.getUser();
+                        }
+                      },
+                      buttonText: "Sign In",
                     ),
-                  )
-                ],
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          const Text("Don't have an account?"),
+                          GestureDetector(
+                            onTap: () => Get.toNamed(RouterHelper.signUp),
+                            child: Text(
+                              "Sign Up",
+                              style:
+                                  style.copyWith(color: AppColors.primaryColor),
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             )
           ],

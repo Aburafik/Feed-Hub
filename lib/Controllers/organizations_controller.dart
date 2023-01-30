@@ -12,19 +12,16 @@ class OrganizationsController extends GetxController {
 
   final getOrganizations =
       FirebaseFirestore.instance.collection('organizations').get();
-  fetchAllOrganizations() {   
-    print("gettting ###############################");                                                                                      
+  fetchAllOrganizations() {
+    print("gettting ###############################");
     getOrganizations.then((value) {
       final data = value.docs.map((e) => e.data()).toList();
 
       organizations.value = data;
 
-      print(organizations);
-      // update();
-      // print("...........the data is ..................");
-      // print(data);
+      // print(organizations);
 
-      print("...........the data is ..................");
+      // print("...........the data is ..................");
     }, onError: (e) => print("Error getting document: $e"));
   }
 }

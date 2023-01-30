@@ -1,3 +1,4 @@
+import 'package:feed_hub/Admin/chats/chats.dart';
 import 'package:feed_hub/Admin/donations/all_donations.dart';
 import 'package:feed_hub/Admin/home/admin_home.dart';
 import 'package:feed_hub/Admin/ngos/ngos_home.dart';
@@ -56,8 +57,7 @@ List tabs = [
   },
   {
     "title": "NGOs",
-    "icon":
-        Icon(FeatherIcons.square, color: Colors.grey[300], size: 20),
+    "icon": Icon(FeatherIcons.square, color: Colors.grey[300], size: 20),
   },
   {
     "title": "DONATIONS",
@@ -74,6 +74,10 @@ List tabs = [
   {
     "title": "PUSH NOTIFICATIONS",
     "icon": Icon(FeatherIcons.bell, color: Colors.grey[300], size: 20),
+  },
+  {
+    "title": "CHATS",
+    "icon": Icon(FeatherIcons.messageCircle, color: Colors.grey[300], size: 20),
   },
 ];
 
@@ -146,10 +150,8 @@ class _WebDashboardVCState extends State<WebDashboardVC> {
                                             .bodyText1!
                                             .copyWith(color: Colors.grey[300]),
                                       ),
-                                      trailing: Icon(
-                                        Icons.arrow_forward_ios,
-                                        color: Colors.grey[300],size: 20
-                                      ),
+                                      trailing: Icon(Icons.arrow_forward_ios,
+                                          color: Colors.grey[300], size: 20),
                                       leading: e['icon']),
                                 ),
                               )
@@ -201,7 +203,8 @@ layOutViewScreen({String? page}) {
       return UsersHomeVC();
     case "PUSH NOTIFICATIONS":
       return PushNotifications();
-
+    case "CHATS":
+      return Chats();
     case "":
       return AdminHomeVC();
   }
