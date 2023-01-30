@@ -9,7 +9,8 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class HomeVC extends StatelessWidget {
   HomeVC({super.key});
-  final OrganizationsController controller = Get.find<OrganizationsController>();
+  final OrganizationsController controller =
+      Get.find<OrganizationsController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +45,9 @@ class HomeVC extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: controller.organizations.length,
                   itemBuilder: (context, index) {
-                    return const OtherRequestCardComponent();
+                    return OtherRequestCardComponent(
+                      organizations: controller.organizations[index],
+                    );
                   })
             ],
           ),
@@ -55,16 +58,16 @@ class HomeVC extends StatelessWidget {
 }
 
 class OtherRequestCardComponent extends StatelessWidget {
-  const OtherRequestCardComponent({
-    Key? key,
-  }) : super(key: key);
-
+  const OtherRequestCardComponent({Key? key, this.organizations})
+      : super(key: key);
+  final dynamic organizations;
   @override
   Widget build(BuildContext context) {
     TextStyle style = Theme.of(context).textTheme.bodyText1!;
 
     return GestureDetector(
-      onTap: () => Get.toNamed(RouterHelper.homeDetailsView),
+      onTap: () => Get.toNamed(RouterHelper.homeDetailsView,
+          parameters: {"organozation": organizations.toString()}),
       child: Card(
         child: SizedBox(
           height: 100,
@@ -75,8 +78,8 @@ class OtherRequestCardComponent extends StatelessWidget {
                 child: SizedBox(
                   height: 80,
                   width: 80,
-                  child: Image.asset(
-                    Images.img,
+                  child: Image.network(
+                    organizations['image'],
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -87,7 +90,7 @@ class OtherRequestCardComponent extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Mothers Of Peace",
+                    organizations['location'],
                     style: style.copyWith(
                         fontSize: 15,
                         fontWeight: FontWeight.w600,

@@ -29,7 +29,7 @@ class HomeDetailsView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Text(
-                    "Mothers Care Foundation",
+                    "  Get.parameters['location']!.toString(),",
                     style: style.copyWith(fontSize: 20),
                   ),
                   const SizedBox(height: 10),
