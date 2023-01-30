@@ -50,18 +50,21 @@ class DonationServices {
     }
   }
 
-  uploadNewNGO(
-      {String? organizationName,
-      String? organizationDescription,
-      String? location,
-      BuildContext? context}) async {
+  uploadNewNGO({
+    String? organizationName,
+    String? organizationDescription,
+    String? location,
+    String? image,
+    BuildContext? context,
+  }) async {
     startLoading();
 
     try {
       await organizations.add({
         "organizationName": organizationName,
         "organizationDescription": organizationDescription,
-        "location": location
+        "location": location,
+        "image": image
       }).then((value) {
         stopLoading();
 

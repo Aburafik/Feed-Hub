@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:feed_hub/Components/common_button.dart';
@@ -7,10 +5,13 @@ import 'package:feed_hub/Components/form_field.dart';
 import 'package:feed_hub/Controllers/getData_controller.dart';
 import 'package:feed_hub/Services/donate_services.dart';
 import 'package:feed_hub/Utils/colors.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:get/instance_manager.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firabase_storage;
 
 class NgOsHomeVC extends StatelessWidget {
   NgOsHomeVC({super.key});
@@ -71,7 +72,6 @@ class NgOsHomeVC extends StatelessWidget {
                         MaterialStateProperty.all(AppColors.adminPrimaryColor),
                     columns: const [
                       DataColumn(label: Text("Image")),
-
                       DataColumn(
                           label: Expanded(child: Text("Organization Name"))),
                       DataColumn(
@@ -81,17 +81,16 @@ class NgOsHomeVC extends StatelessWidget {
                       )),
                       DataColumn(label: Text("User Location")),
                       DataColumn(label: Text("Update")),
-                      // DataColumn(label: Text("Donation Details")),
                     ],
                     rows: ngos
                         .map((e) => DataRow(cells: [
                               DataCell(CircleAvatar(
-                                  // radius: 40,
-                                  )),
+                                backgroundImage: NetworkImage(e['image']),
+                              )),
                               DataCell(Text(e['organizationName'])),
                               DataCell(Text(e["organizationDescription"])),
                               DataCell(Text(e["location"])),
-                              DataCell(Icon(FeatherIcons.edit)),
+                              const DataCell(Icon(FeatherIcons.edit)),
                             ]))
                         .toList());
               } else {
@@ -109,8 +108,10 @@ class NgOsHomeVC extends StatelessWidget {
   }
 }
 
+FirebaseFirestore getPic = FirebaseFirestore.instance;
+
 class AddNewNGoComponent extends StatefulWidget {
-  AddNewNGoComponent({
+  const AddNewNGoComponent({
     Key? key,
   }) : super(key: key);
 
@@ -127,29 +128,61 @@ class _AddNewNGoComponentState extends State<AddNewNGoComponent> {
 
   final TextEditingController organizationLocationController =
       TextEditingController();
-  File? imageFile;
-  dynamic imageForSendToAPI;
-  chooseImage() async {
-    final temp = (await ImagePicker()
-        .getImage(source: ImageSource.gallery, imageQuality: 80));
-    imageForSendToAPI = await temp!.readAsBytes();
-    setState(() {});
 
-    // print(imageForSendToAPI.toString());
-    // XFile? pickedFile = await ImagePicker().pickImage(
-    //   source: ImageSource.gallery,
-    // );
-    // setState(() {
-    //   imageFile = File(pickedFile!.path);
-    // });
-    // print(pickedFile!.);
-  }
+  String defaultImageUrl =
+      'https://cdn.pixabay.com/photo/2016/03/23/15/00/ice-cream-1274894_1280.jpg';
+  String selctFile = '';
+  XFile? file;
+  Uint8List? selectedImageInBytes;
+  List<Uint8List> pickedImagesInBytes = [];
+  String imageUrls = "";
 
   DonationServices donationServices = DonationServices();
+
+  _selectFile(bool imageFrom) async {
+    FilePickerResult? fileResult =
+        await FilePicker.platform.pickFiles(allowMultiple: false);
+
+    if (fileResult != null) {
+      selctFile = fileResult.files.first.name;
+      setState(() {
+        selectedImageInBytes = fileResult.files.first.bytes;
+      });
+    }
+    print(selctFile);
+  }
+
+  Future<String> _uploadFile() async {
+    String imageUrl = '';
+    try {
+      firabase_storage.UploadTask uploadTask;
+
+      firabase_storage.Reference ref = firabase_storage.FirebaseStorage.instance
+          .ref()
+          .child('images')
+          .child('/$selctFile');
+
+      final metadata =
+          firabase_storage.SettableMetadata(contentType: 'image/jpeg');
+
+      uploadTask = ref.putData(selectedImageInBytes!, metadata);
+
+      await uploadTask.whenComplete(() => null);
+      imageUrl = await ref.getDownloadURL();
+      setState(() {
+        imageUrls = imageUrl;
+      });
+      print(imageUrl);
+    } catch (e) {
+      print(e);
+      print(imageUrl);
+    }
+    return imageUrl;
+  }
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      // backgroundColor: Colors.white.withOpacity(0.9),
       content: SizedBox(
         width: MediaQuery.of(context).size.height,
         child: Column(
@@ -184,9 +217,9 @@ class _AddNewNGoComponentState extends State<AddNewNGoComponent> {
             const SizedBox(height: 15),
             UploadImagePlaceHolderComponent(
               uploadType: "Image",
-              imageFile: imageForSendToAPI,
+              imageFile: selectedImageInBytes,
               onTap: () {
-                chooseImage();
+                _selectFile(true);
               },
             ),
             Padding(
@@ -194,11 +227,14 @@ class _AddNewNGoComponentState extends State<AddNewNGoComponent> {
               child: CommonButton(
                 buttonText: "UPLOAD",
                 onPressed: () async {
-                  donationServices.uploadNewNGO(
+                  await _uploadFile();
+
+                  await donationServices.uploadNewNGO(
                       context: context,
                       organizationName: organizationNameController.text,
                       organizationDescription:
                           organizationDescriptionController.text,
+                      image: imageUrls,
                       location: organizationLocationController.text);
                 },
               ),

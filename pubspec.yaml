@@ -49,6 +49,10 @@ dependencies:
   flutter_launcher_icons: ^0.11.0
   dotted_border: ^2.0.0+3
   image_picker: ^0.8.6+1
+  image_picker_web: any
+  mime_type: ^1.0.0
+  path: any
+  file_picker: ^5.2.5
 
 dev_dependencies:
   flutter_test:
