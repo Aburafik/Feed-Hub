@@ -1,10 +1,15 @@
+import 'package:feed_hub/Services/auth_service.dart';
+import 'package:feed_hub/Services/donate_services.dart';
 import 'package:feed_hub/Views/chats/chats.dart';
 import 'package:feed_hub/Utils/colors.dart';
 import 'package:feed_hub/Views/donate/donation_history.dart';
 import 'package:feed_hub/Views/home/home.dart';
 import 'package:feed_hub/Views/profile/profile_view.dart';
+import 'package:feed_hub/main.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class DashBoardView extends StatefulWidget {
   const DashBoardView({
@@ -17,7 +22,7 @@ class DashBoardView extends StatefulWidget {
 class _DashBoardViewState extends State<DashBoardView> {
   int _pageIndex = 0;
   PageController? _pageController;
-
+  final DonationServices donationServices = DonationServices();
   List<Widget>? screens;
   @override
   void initState() {
@@ -29,7 +34,56 @@ class _DashBoardViewState extends State<DashBoardView> {
       Chats(),
       ProfileVC(),
     ];
+    var iosInitialization = const DarwinInitializationSettings();
+    var initialzationSettingsAndroid =
+        const AndroidInitializationSettings('@mipmap/ic_launcher');
+    var initializationSettings = InitializationSettings(
+      iOS: iosInitialization,
+      android: initialzationSettingsAndroid,
+    );
+    flutterLocalNotificationsPlugin.initialize(initializationSettings);
+
+    FirebaseMessaging.onMessage.listen(
+      (RemoteMessage? message) {
+        RemoteNotification notification = message!.notification!;
+        AndroidNotification android = message.notification!.android!;
+        if (notification != null && android != null) {
+          flutterLocalNotificationsPlugin.show(
+            notification.hashCode,
+            notification.title,
+            notification.body,
+            NotificationDetails(
+              android: AndroidNotificationDetails(
+                channel.id,
+                channel.name,
+                channelDescription: channel.description,
+                color: Colors.blue,
+                icon: "@mipmap/ic_launcher",
+              ),
+            ),
+          );
+        }
+        print(message.notification!.title);
+        donationServices.getNotification(
+            title: notification.title, body: notification.body);
+      },
+    );
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage? message) {
+      if (message != null) {}
+      Navigator.pushNamed(
+        context,
+        "/notification",
+      );
+    });
+    getToken();
     super.initState();
+  }
+
+  String? token;
+  getToken() async {
+    token = await FirebaseMessaging.instance.getToken();
+    print("###########FCM-TOKEN $token");
   }
 
   void _setPage(int pageIndex) {
@@ -42,7 +96,7 @@ class _DashBoardViewState extends State<DashBoardView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const Drawer(),
+      drawer: AppDrawerComponent(),
       appBar: AppBar(
         title: const Text("FEED Hub"),
         actions: [
@@ -71,6 +125,113 @@ class _DashBoardViewState extends State<DashBoardView> {
               label: "Chats", icon: Icon(FeatherIcons.messageSquare)),
           BottomNavigationBarItem(
               label: "Profile", icon: Icon(FeatherIcons.user)),
+        ],
+      ),
+    );
+  }
+}
+
+class AppDrawerComponent extends StatelessWidget {
+  AppDrawerComponent({
+    Key? key,
+  }) : super(key: key);
+  final AuthUser _authUser = AuthUser();
+  @override
+  Widget build(BuildContext context) {
+    TextStyle textStyle = Theme.of(context).textTheme.bodyText1!.copyWith();
+    const divider = Divider(
+      color: Colors.grey,
+      height: 10,
+    );
+    return Drawer(
+      child: Column(
+        children: [
+          Container(
+            height: MediaQuery.of(context).size.height / 4,
+            color: AppColors.primaryColor,
+          ),
+          const SizedBox(height: 10),
+          ListTile(
+            leading: const Icon(FeatherIcons.user),
+            title: Text(
+              "Profile",
+              style: textStyle,
+            ),
+            onTap: () {},
+          ),
+          const Divider(
+            color: Colors.grey,
+            height: 10,
+          ),
+          ListTile(
+            leading: Icon(FeatherIcons.clock),
+            title: Text(
+              "Donation Overview",
+              style: textStyle,
+            ),
+          ),
+          const Divider(
+            color: Colors.grey,
+            height: 10,
+          ),
+          ListTile(
+            leading: Icon(FeatherIcons.bookmark),
+            title: Text(
+              "About us",
+              style: textStyle,
+            ),
+          ),
+          divider,
+          ListTile(
+            leading: Icon(FeatherIcons.info),
+            title: Text(
+              "Help",
+              style: textStyle,
+            ),
+          ),
+          const Divider(
+            color: Colors.grey,
+            height: 10,
+          ),
+          ListTile(
+            leading: Icon(FeatherIcons.clock),
+            title: Text("Share", style: textStyle),
+          ),
+          const Divider(
+            color: Colors.grey,
+            height: 10,
+          ),
+          ListTile(
+            leading: Icon(FeatherIcons.clock),
+            title: Text(
+              "Terms and Conditions",
+              style: textStyle,
+            ),
+          ),
+          const Divider(
+            color: Colors.grey,
+            height: 10,
+          ),
+          const SizedBox(height: 20),
+          GestureDetector(
+            onTap: () async {
+              await _authUser.logOut();
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(left: 20),
+              child: Row(
+                // mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Logout",
+                    style: textStyle,
+                  ),
+                  SizedBox(width: 10),
+                  Icon(FeatherIcons.logOut),
+                ],
+              ),
+            ),
+          )
         ],
       ),
     );

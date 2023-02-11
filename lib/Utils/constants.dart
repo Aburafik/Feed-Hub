@@ -16,7 +16,6 @@ class NGoDetailsImageHolderComponent extends StatelessWidget {
     return SizedBox(
       height: MediaQuery.of(context).size.height / 3,
       child: Stack(children: [
-
         Container(
           decoration: BoxDecoration(
             image: DecorationImage(

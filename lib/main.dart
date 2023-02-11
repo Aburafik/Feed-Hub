@@ -1,17 +1,27 @@
+import 'dart:convert';
+
 import 'package:feed_hub/Admin/chats/chats.dart';
 import 'package:feed_hub/Admin/donations/all_donations.dart';
 import 'package:feed_hub/Admin/home/admin_home.dart';
 import 'package:feed_hub/Admin/ngos/ngos_home.dart';
 import 'package:feed_hub/Admin/pushNotifications/push_notifications.dart';
 import 'package:feed_hub/Admin/users/users_home.dart';
+import 'package:feed_hub/Services/dynamic_link.dart';
 import 'package:feed_hub/Utils/colors.dart';
 import 'package:feed_hub/Utils/router_helper.dart';
 import 'package:feed_hub/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  print('Handling a background message ${message.messageId}');
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,11 +29,49 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  await flutterLocalNotificationsPlugin
+      .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()
+      ?.createNotificationChannel(channel);
+
+  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+    alert: true,
+    badge: true,
+    sound: true,
+  );
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final DynamicLinks initLink = DynamicLinks();
+  @override
+  void initState() {
+    // initLink.initLink();
+    checkUserStatus();
+
+    // TODO: implement initState
+    super.initState();
+  }
+
+  String? userName;
+  checkUserStatus() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    final userInfor = pref.getString('user');
+    Map<String, dynamic> user = json.decode(userInfor!);
+    setState(() {
+      userName = user['userName'];
+    });
+
+    print("#########$userName###########");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,8 +91,11 @@ class MyApp extends StatelessWidget {
           iconTheme: IconThemeData(color: AppColors.whiteColor),
         ),
       ),
-      initialRoute:
-          GetPlatform.isWeb ? RouterHelper.adminLogin : RouterHelper.signIn,
+      initialRoute: GetPlatform.isWeb
+          ? RouterHelper.adminLogin
+          : userName == null
+              ? RouterHelper.signIn
+              : RouterHelper.dashBoard,
       getPages: RouterHelper.router,
     );
   }
@@ -209,3 +260,23 @@ layOutViewScreen({String? page}) {
       return AdminHomeVC();
   }
 }
+
+class PageScreen extends StatelessWidget {
+  const PageScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+    );
+  }
+}
+
+const AndroidNotificationChannel channel = AndroidNotificationChannel(
+  'high_importance_channel',
+  'High Importance Notifications',
+  description: 'This channel is used for important notifications.',
+  importance: Importance.high,
+);
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();

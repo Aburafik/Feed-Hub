@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:feed_hub/Controllers/organizations_controller.dart';
+import 'package:feed_hub/Services/dynamic_link.dart';
 import 'package:feed_hub/Utils/colors.dart';
 import 'package:feed_hub/Utils/images.dart';
 import 'package:feed_hub/Utils/router_helper.dart';
@@ -11,52 +13,66 @@ class HomeVC extends StatelessWidget {
   HomeVC({super.key});
   final OrganizationsController controller =
       Get.find<OrganizationsController>();
+  final Stream<QuerySnapshot> organizations =
+      FirebaseFirestore.instance.collection('organizations').snapshots();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       // drawer: const Drawer(),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const HomeBanner(),
-              HomeHeadingComponent(
-                leading: "Recent NGOs Request",
-                onTap: () => Get.toNamed(RouterHelper.allNgoListView,
-                    arguments: controller.organizations),
-              ),
-              SizedBox(
-                height: 230,
-                child: ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: controller.organizations.length,
-                    itemBuilder: (context, index) {
-                      return NGosCard(
-                        recentOrganizations: controller.organizations[index],
-                        organizations: controller.organizations,
-                      );
-                    }),
-              ),
-              HomeHeadingComponent(
-                leading: "Others Request",
-                onTap: () => Get.toNamed(RouterHelper.allNgoListView,
-                    arguments: controller.organizations),
-              ),
-              ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: controller.organizations.length > 3 ? 3 : 2,
-                  itemBuilder: (context, index) {
-                    return OtherRequestCardComponent(
-                      organizations: controller.organizations[index],
-                    );
-                  })
-            ],
-          ),
-        ),
+        child: StreamBuilder<QuerySnapshot>(
+            stream: organizations,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: Text("Wating for Data"));
+              }
+              if (snapshot.connectionState == ConnectionState.done &&
+                  snapshot.data == null) {
+                return const Center(child: Text("No Dtata"));
+              }
+              return SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    HomeBanner(),
+                    HomeHeadingComponent(
+                      leading: "Recent NGOs Request",
+                      onTap: () => Get.toNamed(RouterHelper.allNgoListView,
+                          arguments: controller.organizations),
+                    ),
+                    SizedBox(
+                      height: 230,
+                      child: ListView.builder(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          itemCount: snapshot.data!.docs.length,
+                          itemBuilder: (context, index) {
+                            return NGosCard(
+                              recentOrganizations:
+                                  controller.organizations[index],
+                              organizations: controller.organizations,
+                            );
+                          }),
+                    ),
+                    HomeHeadingComponent(
+                      leading: "Others Request",
+                      onTap: () => Get.toNamed(RouterHelper.allNgoListView,
+                          arguments: controller.organizations),
+                    ),
+                    ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: controller.organizations.length > 3 ? 3 : 2,
+                        itemBuilder: (context, index) {
+                          return OtherRequestCardComponent(
+                            organizations: controller.organizations[index],
+                          );
+                        })
+                  ],
+                ),
+              );
+            }),
       ),
     );
   }
@@ -98,12 +114,12 @@ class OtherRequestCardComponent extends StatelessWidget {
                     organizations['organizationName'],
                     style: style.copyWith(
                         fontSize: 15,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w500,
                         color: Colors.black),
                   ),
                   Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.location_on,
                         size: 15,
                         color: Colors.grey,
@@ -150,7 +166,7 @@ class HomeHeadingComponent extends StatelessWidget {
             style: Theme.of(context)
                 .textTheme
                 .bodyText1!
-                .copyWith(fontSize: 20, fontWeight: FontWeight.w600),
+                .copyWith(fontSize: 18, fontWeight: FontWeight.w500),
           ),
           GestureDetector(
             onTap: onTap,
@@ -184,7 +200,6 @@ class NGosCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Container(
-                 
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           image: NetworkImage(
@@ -244,54 +259,52 @@ class NGosCard extends StatelessWidget {
 }
 
 class HomeBanner extends StatelessWidget {
-  const HomeBanner({
+  HomeBanner({
     Key? key,
   }) : super(key: key);
-
+  final DynamicLinks creatLink = DynamicLinks();
   @override
   Widget build(BuildContext context) {
     TextStyle style = Theme.of(context)
         .textTheme
         .bodyText1!
         .copyWith(color: AppColors.whiteColor, fontSize: 16);
-    return Card(
-      margin: EdgeInsets.zero,
-      child: Container(
-        height: MediaQuery.of(context).size.height / 5.5,
-        decoration: BoxDecoration(
-            gradient: const LinearGradient(colors: [
-              AppColors.primaryLightColor,
-              AppColors.primaryColor,
-            ]),
-            borderRadius: BorderRadius.circular(10)),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Do you have some", style: style),
-                Text(
-                  "food to donate?",
+    return Container(
+      height: MediaQuery.of(context).size.height / 5.5,
+      decoration: BoxDecoration(
+          gradient: const LinearGradient(colors: [
+            AppColors.primaryLightColor,
+            AppColors.primaryColor,
+          ]),
+          borderRadius: BorderRadius.circular(10)),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Do you have some", style: style),
+              Text(
+                "food to donate?",
+                style: style,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Text(
+                  "Donate Now -->",
                   style: style,
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: Text(
-                    "Donate Now -->",
-                    style: style,
-                  ),
-                ),
-              ],
-            ),
-            Image.asset(
-              Images.food,
-              height: 100,
-            )
-          ],
-        ),
+              ),
+             
+            ],
+          ),
+          Image.asset(
+            Images.food,
+            height: 100,
+          )
+        ],
       ),
     );
   }

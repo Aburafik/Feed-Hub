@@ -3,6 +3,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:feed_hub/Components/common_button.dart';
 import 'package:feed_hub/Components/form_field.dart';
 import 'package:feed_hub/Controllers/getData_controller.dart';
+import 'package:feed_hub/Services/auth_service.dart';
 import 'package:feed_hub/Services/donate_services.dart';
 import 'package:feed_hub/Utils/colors.dart';
 import 'package:feed_hub/Utils/constants.dart';
@@ -126,6 +127,7 @@ class _AddNewNGoComponentState extends State<AddNewNGoComponent> {
 
   final TextEditingController organizationDescriptionController =
       TextEditingController();
+  final TextEditingController tokenController = TextEditingController();
 
   final TextEditingController organizationLocationController =
       TextEditingController();
@@ -186,62 +188,71 @@ class _AddNewNGoComponentState extends State<AddNewNGoComponent> {
     return AlertDialog(
       content: SizedBox(
         width: MediaQuery.of(context).size.height,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              child: Text("NEW",
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText1!
-                      .copyWith(fontWeight: FontWeight.bold, fontSize: 20)),
-            ),
-            FormFieldComponent(
-              label: "Organization Name",
-              controller: organizationNameController,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              child: FormFieldComponent(
-                label: "Organization Location",
-                controller: organizationLocationController,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: Text("NEW",
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText1!
+                        .copyWith(fontWeight: FontWeight.bold, fontSize: 20)),
               ),
-            ),
-            FormFieldComponent(
-              maxLines: 4,
-              label: "Organization Description",
-              controller: organizationDescriptionController,
-            ),
-            const SizedBox(height: 15),
-            const Text("Upload Organization Logo"),
-            const SizedBox(height: 15),
-            UploadImagePlaceHolderComponent(
-              uploadType: "Image",
-              imageFile: selectedImageInBytes,
-              onTap: () {
-                _selectFile(true);
-              },
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 50),
-              child: CommonButton(
-                buttonText: "UPLOAD",
-                onPressed: () async {
-                  startLoading();
-                  await _uploadFile();
-
-                  await donationServices.uploadNewNGO(
-                      context: context,
-                      organizationName: organizationNameController.text,
-                      organizationDescription:
-                          organizationDescriptionController.text,
-                      image: imageUrls,
-                      location: organizationLocationController.text);
+              FormFieldComponent(
+                label: "Organization Name",
+                controller: organizationNameController,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: FormFieldComponent(
+                  label: "Organization Location",
+                  controller: organizationLocationController,
+                ),
+              ),
+              FormFieldComponent(
+                label: "Token",
+                controller: tokenController,
+              ),
+              const SizedBox(height: 15),
+              FormFieldComponent(
+                maxLines: 4,
+                label: "Organization Description",
+                controller: organizationDescriptionController,
+              ),
+              const SizedBox(height: 15),
+              const Text("Upload Organization Logo"),
+              const SizedBox(height: 15),
+              UploadImagePlaceHolderComponent(
+                uploadType: "Image",
+                imageFile: selectedImageInBytes,
+                onTap: () {
+                  _selectFile(true);
                 },
               ),
-            )
-          ],
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 50, horizontal: 50),
+                child: CommonButton(
+                  buttonText: "UPLOAD",
+                  onPressed: () async {
+                    startLoading();
+                    await _uploadFile();
+
+                    await donationServices.uploadNewNGO(
+                        context: context,
+                        organizationName: organizationNameController.text,
+                        organizationDescription:
+                            organizationDescriptionController.text,
+                        image: imageUrls,
+                        location: organizationLocationController.text);
+                    await AuthUser.sendPushMessage(token: tokenController.text);
+                  },
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

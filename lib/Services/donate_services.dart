@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:feed_hub/Controllers/notifications_controller.dart';
 import 'package:feed_hub/Utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,8 @@ class DonationServices {
       FirebaseFirestore.instance.collection('AllDonations');
   CollectionReference organizations =
       FirebaseFirestore.instance.collection('organizations');
+  CollectionReference notifications =
+      FirebaseFirestore.instance.collection('notifications');
   String userId = FirebaseAuth.instance.currentUser!.uid;
   Future donateItem({
     String? dishName,
@@ -42,6 +45,14 @@ class DonationServices {
       });
       stopLoading();
       donateSuccessMessage(context: context);
+
+      Future.delayed(Duration(seconds: 5), () {
+        NotificationsController.showNotification(
+          body: "Your order was recieved successfully",
+          title: "Hi ${user["userName"]}",
+        );
+      });
+
       // Get.back();
     } catch (e) {
       stopLoading();
@@ -72,11 +83,14 @@ class DonationServices {
           messsage: "Organization uploaded successfully", context: context!);
     } catch (e) {
       stopLoading();
-      print(e);
       showSnackbar(
           messsage: "Oppps something went wrong",
           isError: true,
           context: context!);
     }
+  }
+
+  getNotification({String? title, String? body}) async {
+    await notifications.add({"title": title, "body": body});
   }
 }

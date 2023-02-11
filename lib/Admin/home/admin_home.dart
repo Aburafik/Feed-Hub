@@ -4,6 +4,7 @@ import 'package:feed_hub/Controllers/getData_controller.dart';
 import 'package:feed_hub/Utils/colors.dart';
 import 'package:feed_hub/Utils/router_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:get/instance_manager.dart';
 import 'package:get/route_manager.dart';
 
@@ -26,7 +27,7 @@ class AdminHomeVC extends StatelessWidget {
                   DashBoardSummaryCard(
                     title: "Total NGOs",
                     subTitle: dataController.allNGOs.toString(),
-                    icon: Icons.person_add,
+                    icon: FeatherIcons.users,
                   ),
                   DashBoardSummaryCard(
                     title: "Total Users",

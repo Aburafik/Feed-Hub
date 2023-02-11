@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -7,12 +9,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:get/utils.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class AuthUser {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   CollectionReference users = FirebaseFirestore.instance.collection('users');
   CollectionReference chats =
-    FirebaseFirestore.instance.collection('questionsAndAnswers');
+      FirebaseFirestore.instance.collection('questionsAndAnswers');
   addUser(
       {String? fullName,
       String? email,
@@ -88,8 +92,19 @@ class AuthUser {
       {String? emailAddress, String? password, BuildContext? context}) async {
     startLoading(status: "Signing In");
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: emailAddress!, password: password!);
+      await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: emailAddress!, password: password!)
+          .timeout(
+        Duration(seconds: 30),
+        onTimeout: () {
+          stopLoading();
+          return showSnackbar(
+              context: context,
+              messsage: "Opps, Check your internet connection!",
+              isError: true);
+          // print("nework erro########################");
+        },
+      );
 
       stopLoading();
       Get.offNamed(GetPlatform.isWeb
@@ -114,13 +129,19 @@ class AuthUser {
             isError: true);
         // print('Wrong password provided for that user.');
       }
-    } on SocketException {
+    } on SocketException catch (_) {
       stopLoading();
       showSnackbar(
           context: context,
           messsage: "Opps, Check your internet connection!",
           isError: true);
       print("nework erro########################");
+    } on TimeoutException catch (e) {
+      stopLoading();
+      showSnackbar(
+          context: context,
+          messsage: "Opps, Check your internet connection!",
+          isError: true);
     } catch (e) {
       stopLoading();
       showSnackbar(
@@ -131,7 +152,16 @@ class AuthUser {
     }
   }
 
+  logOut() async {
+    startLoading();
+    SharedPreferences pref = await SharedPreferences.getInstance();
 
+    Future.delayed(Duration(seconds: 3), () {
+      pref.remove('user');
+      Get.offNamed(RouterHelper.signIn);
+      stopLoading();
+    });
+  }
 
   Future sendQuestion(
       {String? senderEmail,
@@ -151,5 +181,50 @@ class AuthUser {
       'created_at': Timestamp.now().millisecondsSinceEpoch,
     });
   }
-  
+
+
+
+
+
+
+
+
+
+
+ static String constructFCMPayload(String token) {
+    return jsonEncode({
+      'to': token,
+      'data': {
+        'via': 'FlutterFire Cloud Messaging!!!',
+      },
+      'notification': {
+        'title': 'Your item   is added successfully !',
+        'body': 'Please subscribe, like and share this tutorial !',
+      },
+    });
+  }
+
+ static Future<void> sendPushMessage({String? token}) async {
+    if (token == null) {
+      print('Unable to send FCM message, no token exists.');
+      return;
+    }
+
+    try {
+      String serverKey = "AAAA2-62d2Q:APA91bGOKTMwQpIKEUktzY6bT4OfqvB_HNGNMCsbb1WQv2qfgVhSCGv13Oaug1PoX-HcYp3TsRye2RpGfJbkHCg--oqSnYP_HXXIND83gfRkxpzaeFUB5Fm8_GSDj1sL1VrrmVfMpmn5";
+      await http.post(
+        Uri.parse('https://fcm.googleapis.com/fcm/send'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'key=$serverKey'
+        },
+        body: constructFCMPayload(token),
+      );
+      print('FCM request for device sent!');
+    } catch (e) {
+      print(e);
+    }
+  }
 }
+
+

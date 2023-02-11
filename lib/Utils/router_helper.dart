@@ -18,6 +18,7 @@ class RouterHelper {
   static const String signUp = "/signUp";
   static const String webDashBoard = "/webDashBoard";
   static const String adminLogin = "/adminLogin";
+  static const String page = "/page";
 
   static List<GetPage> router = [
     GetPage(name: dashBoard, page: () => const DashBoardView()),
@@ -28,5 +29,6 @@ class RouterHelper {
     GetPage(name: signIn, page: () => SignIn()),
     GetPage(name: webDashBoard, page: () => const WebDashboardVC()),
     GetPage(name: adminLogin, page: () => AdminLogin()),
+    GetPage(name: page, page: () => PageScreen()),
   ];
 }
