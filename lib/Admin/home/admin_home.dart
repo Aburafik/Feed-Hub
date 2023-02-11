@@ -27,17 +27,17 @@ class AdminHomeVC extends StatelessWidget {
                   DashBoardSummaryCard(
                     title: "Total NGOs",
                     subTitle: dataController.allNGOs.toString(),
-                    icon: FeatherIcons.users,
+                    icon: FeatherIcons.barChart2,
                   ),
                   DashBoardSummaryCard(
                     title: "Total Users",
                     subTitle: dataController.allUsers.toString(),
-                    icon: Icons.person_add,
+                    icon: FeatherIcons.users,
                   ),
                   DashBoardSummaryCard(
                     title: "Total Donations", 
                     subTitle: dataController.allDonations.toString(),
-                    icon: Icons.person_add,
+                    icon: FeatherIcons.barChart,
                   ),
                 ],
               ),
@@ -133,11 +133,11 @@ class DashBoardSummaryCard extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Row(
               children: [
-                const CircleAvatar(
+                 CircleAvatar(
                   radius: 45,
                   backgroundColor: AppColors.adminPrimaryColor,
                   child: Icon(
-                    Icons.person,
+                    icon,
                     size: 40,
                     color: AppColors.whiteColor,
                   ),

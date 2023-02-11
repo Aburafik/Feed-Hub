@@ -52,58 +52,60 @@ class NgOsHomeVC extends StatelessWidget {
             ),
           ),
           Expanded(
-              child: StreamBuilder<QuerySnapshot>(
-            stream: organizations,
-            builder: ((context, snapshot) {
-              if (snapshot.hasData) {
-                final ngos = snapshot.data!.docs.reversed;
-                dataController.getAllNGOs(ngos.length);
-                return DataTable(
-                    dataTextStyle: Theme.of(context)
-                        .textTheme
-                        .bodyText1!
-                        .copyWith(
-                            color: Colors.black, fontWeight: FontWeight.bold),
-                    headingTextStyle: Theme.of(context)
-                        .textTheme
-                        .bodyText1!
-                        .copyWith(color: const Color(0xff747889)),
-                    headingRowHeight: 30,
-                    horizontalMargin: 20,
-                    headingRowColor:
-                        MaterialStateProperty.all(AppColors.adminPrimaryColor),
-                    columns: const [
-                      DataColumn(label: Text("Image")),
-                      DataColumn(
-                          label: Expanded(child: Text("Organization Name"))),
-                      DataColumn(
-                          label: Text(
-                        "Organization Description",
-                        softWrap: true,
-                      )),
-                      DataColumn(label: Text("User Location")),
-                      DataColumn(label: Text("Update")),
-                    ],
-                    rows: ngos
-                        .map((e) => DataRow(cells: [
-                              DataCell(CircleAvatar(
-                                backgroundImage: NetworkImage(e['image']),
-                              )),
-                              DataCell(Text(e['organizationName'])),
-                              DataCell(Text(e["organizationDescription"])),
-                              DataCell(Text(e["location"])),
-                              const DataCell(Icon(FeatherIcons.edit)),
-                            ]))
-                        .toList());
-              } else {
-                return const Expanded(
-                  child: Center(
-                    child: Text("No Data"),
-                  ),
-                );
-              }
-            }),
-          ))
+              child: SingleChildScrollView(
+                child: StreamBuilder<QuerySnapshot>(
+                          stream: organizations,
+                          builder: ((context, snapshot) {
+                if (snapshot.hasData) {
+                  final ngos = snapshot.data!.docs.reversed;
+                  dataController.getAllNGOs(ngos.length);
+                  return DataTable(
+                      dataTextStyle: Theme.of(context)
+                          .textTheme
+                          .bodyText1!
+                          .copyWith(
+                              color: Colors.black, fontWeight: FontWeight.bold),
+                      headingTextStyle: Theme.of(context)
+                          .textTheme
+                          .bodyText1!
+                          .copyWith(color: Color.fromARGB(255, 201, 202, 206)),
+                      headingRowHeight: 30,
+                      horizontalMargin: 20,
+                      headingRowColor:
+                          MaterialStateProperty.all(AppColors.adminPrimaryColor),
+                      columns: const [
+                        DataColumn(label: Text("Image")),
+                        DataColumn(
+                            label: Expanded(child: Text("Organization Name"))),
+                        DataColumn(
+                            label: Text(
+                          "Organization Description",
+                          softWrap: true,
+                        )),
+                        DataColumn(label: Text("Location")),
+                        DataColumn(label: Text("Update")),
+                      ],
+                      rows: ngos
+                          .map((e) => DataRow(cells: [
+                                DataCell(CircleAvatar(
+                                  backgroundImage: NetworkImage("https://media.istockphoto.com/id/619643870/photo/hungry-african-children-asking-for-food-africa.jpg?b=1&s=612x612&w=0&k=20&c=8IQr0y64vuvHGo59LXL1_CtR8cPU-1h5_AA1iV73yZI="),
+                                )),
+                                DataCell(Text(e['organizationName'])),
+                                DataCell(Text(e["organizationDescription"])),
+                                DataCell(Text(e["location"])),
+                                const DataCell(Icon(FeatherIcons.edit)),
+                              ]))
+                          .toList());
+                } else {
+                  return const Expanded(
+                    child: Center(
+                      child: Text("Loading..............."),
+                    ),
+                  );
+                }
+                          }),
+                        ),
+              ))
         ],
       ),
     );

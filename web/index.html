@@ -46,6 +46,10 @@
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-analytics.js";
     import { getMessaging } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-messagin.js";
   </script>
+<script type="text/javascript"> 
+window.flutterWebRenderer=html;
+ </script>
+
 </head>
 <body>  <picture id="splash">
       <source srcset="splash/img/light-1x.png 1x, splash/img/light-2x.png 2x, splash/img/light-3x.png 3x, splash/img/light-4x.png 4x" media="(prefers-color-scheme: light)">
@@ -53,6 +57,8 @@
       <img class="center" aria-hidden="true" src="splash/img/light-1x.png" alt="">
   </picture>
   <script>
+
+
     window.addEventListener('load', function(ev) {
       // Download main.dart.js
       _flutter.loader.loadEntrypoint({

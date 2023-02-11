@@ -56,7 +56,7 @@ class RecentDonationsComponent extends StatelessWidget {
                           headingTextStyle: Theme.of(context)
                               .textTheme
                               .bodyText1!
-                              .copyWith(color: const Color(0xff747889)),
+                              .copyWith(color: const  Color.fromARGB(255, 201, 202, 206)),
                           headingRowHeight: 30,
                           horizontalMargin: 20,
                           headingRowColor: MaterialStateProperty.all(

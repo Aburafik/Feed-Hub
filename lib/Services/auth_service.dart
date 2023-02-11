@@ -181,7 +181,7 @@ class AuthUser {
 
   static String constructFCMPayload(String token) {
     return jsonEncode({
-      'to': "all",
+      'to': token,
       'data': {
         'via': 'FlutterFire Cloud Messaging!!!',
       },
