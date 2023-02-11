@@ -10,6 +10,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/get.dart';
 
 class DashBoardView extends StatefulWidget {
   const DashBoardView({
@@ -82,8 +83,12 @@ class _DashBoardViewState extends State<DashBoardView> {
 
   String? token;
   getToken() async {
-    token = await FirebaseMessaging.instance.getToken();
-    print("###########FCM-TOKEN $token");
+    if (GetPlatform.isWeb) {
+    } else {
+      await FirebaseMessaging.instance.subscribeToTopic('all');
+      token = await FirebaseMessaging.instance.getToken();
+      print("###########FCM-TOKEN $token");
+    }
   }
 
   void _setPage(int pageIndex) {

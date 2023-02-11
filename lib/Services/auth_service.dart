@@ -191,9 +191,9 @@ class AuthUser {
 
 
 
- static String constructFCMPayload(String token) {
+ static String constructFCMPayload() {
     return jsonEncode({
-      'to': token,
+      'to': "all",
       'data': {
         'via': 'FlutterFire Cloud Messaging!!!',
       },
@@ -204,11 +204,11 @@ class AuthUser {
     });
   }
 
- static Future<void> sendPushMessage({String? token}) async {
-    if (token == null) {
-      print('Unable to send FCM message, no token exists.');
-      return;
-    }
+ static Future<void> sendPushMessage() async {
+    // if (token == null) {
+    //   print('Unable to send FCM message, no token exists.');
+    //   return;
+    // }
 
     try {
       String serverKey = "AAAA2-62d2Q:APA91bGOKTMwQpIKEUktzY6bT4OfqvB_HNGNMCsbb1WQv2qfgVhSCGv13Oaug1PoX-HcYp3TsRye2RpGfJbkHCg--oqSnYP_HXXIND83gfRkxpzaeFUB5Fm8_GSDj1sL1VrrmVfMpmn5";
@@ -218,7 +218,7 @@ class AuthUser {
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'key=$serverKey'
         },
-        body: constructFCMPayload(token),
+        body: constructFCMPayload(),
       );
       print('FCM request for device sent!');
     } catch (e) {

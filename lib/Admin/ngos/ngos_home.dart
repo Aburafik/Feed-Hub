@@ -39,7 +39,9 @@ class NgOsHomeVC extends StatelessWidget {
                   child: Text(
                     "Add NGO",
                     style: Theme.of(context).textTheme.headline1!.copyWith(
-                        decoration: TextDecoration.underline, fontSize: 16),
+                        decoration: TextDecoration.underline,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold),
                   ),
                   onTap: () {
                     showDialog(
@@ -247,7 +249,7 @@ class _AddNewNGoComponentState extends State<AddNewNGoComponent> {
                             organizationDescriptionController.text,
                         image: imageUrls,
                         location: organizationLocationController.text);
-                    await AuthUser.sendPushMessage(token: tokenController.text);
+                    await AuthUser.sendPushMessage();
                   },
                 ),
               )

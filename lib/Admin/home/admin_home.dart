@@ -35,7 +35,7 @@ class AdminHomeVC extends StatelessWidget {
                     icon: Icons.person_add,
                   ),
                   DashBoardSummaryCard(
-                    title: "Total Donations",
+                    title: "Total Donations", 
                     subTitle: dataController.allDonations.toString(),
                     icon: Icons.person_add,
                   ),
