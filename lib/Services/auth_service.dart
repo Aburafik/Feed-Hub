@@ -102,7 +102,6 @@ class AuthUser {
               context: context,
               messsage: "Opps, Check your internet connection!",
               isError: true);
-          // print("nework erro########################");
         },
       );
 
@@ -113,8 +112,6 @@ class AuthUser {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         stopLoading();
-
-        // print('No user found for that email.');
 
         showSnackbar(
             context: context,
@@ -182,36 +179,28 @@ class AuthUser {
     });
   }
 
-
-
-
-
-
-
-
-
-
- static String constructFCMPayload(String token) {
+  static String constructFCMPayload(String token) {
     return jsonEncode({
-      'to': token,
+      'to': "all",
       'data': {
         'via': 'FlutterFire Cloud Messaging!!!',
       },
       'notification': {
-        'title': 'Your item   is added successfully !',
-        'body': 'Please subscribe, like and share this tutorial !',
+        'title': 'Hi!',
+        'body': 'A New organization food request has been uploaded!',
       },
     });
   }
 
- static Future<void> sendPushMessage({String? token}) async {
+  static Future<void> sendPushMessage({String? token}) async {
     if (token == null) {
       print('Unable to send FCM message, no token exists.');
       return;
     }
 
     try {
-      String serverKey = "AAAA2-62d2Q:APA91bGOKTMwQpIKEUktzY6bT4OfqvB_HNGNMCsbb1WQv2qfgVhSCGv13Oaug1PoX-HcYp3TsRye2RpGfJbkHCg--oqSnYP_HXXIND83gfRkxpzaeFUB5Fm8_GSDj1sL1VrrmVfMpmn5";
+      String serverKey =
+          "AAAA2-62d2Q:APA91bGOKTMwQpIKEUktzY6bT4OfqvB_HNGNMCsbb1WQv2qfgVhSCGv13Oaug1PoX-HcYp3TsRye2RpGfJbkHCg--oqSnYP_HXXIND83gfRkxpzaeFUB5Fm8_GSDj1sL1VrrmVfMpmn5";
       await http.post(
         Uri.parse('https://fcm.googleapis.com/fcm/send'),
         headers: <String, String>{
@@ -226,5 +215,3 @@ class AuthUser {
     }
   }
 }
-
-
