@@ -39,9 +39,7 @@ class NgOsHomeVC extends StatelessWidget {
                   child: Text(
                     "Add NGO",
                     style: Theme.of(context).textTheme.headline1!.copyWith(
-                        decoration: TextDecoration.underline,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold),
+                        decoration: TextDecoration.underline, fontSize: 16),
                   ),
                   onTap: () {
                     showDialog(
@@ -134,7 +132,8 @@ class _AddNewNGoComponentState extends State<AddNewNGoComponent> {
   final TextEditingController organizationLocationController =
       TextEditingController();
 
-  
+  String defaultImageUrl =
+      'https://cdn.pixabay.com/photo/2016/03/23/15/00/ice-cream-1274894_1280.jpg';
   String selctFile = '';
   XFile? file;
   Uint8List? selectedImageInBytes;
@@ -212,11 +211,11 @@ class _AddNewNGoComponentState extends State<AddNewNGoComponent> {
                   controller: organizationLocationController,
                 ),
               ),
-              // FormFieldComponent(
-              //   label: "Token",
-              //   controller: tokenController,
-              // ),
-              // const SizedBox(height: 15),
+              FormFieldComponent(
+                label: "Token",
+                controller: tokenController,
+              ),
+              const SizedBox(height: 15),
               FormFieldComponent(
                 maxLines: 4,
                 label: "Organization Description",
@@ -248,7 +247,7 @@ class _AddNewNGoComponentState extends State<AddNewNGoComponent> {
                             organizationDescriptionController.text,
                         image: imageUrls,
                         location: organizationLocationController.text);
-                    await AuthUser.sendPushMessage();
+                    await AuthUser.sendPushMessage(token: tokenController.text);
                   },
                 ),
               )
