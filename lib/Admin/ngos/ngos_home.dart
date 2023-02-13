@@ -87,7 +87,7 @@ class NgOsHomeVC extends StatelessWidget {
                       ],
                       rows: ngos
                           .map((e) => DataRow(cells: [
-                                DataCell(CircleAvatar(
+                               const DataCell(CircleAvatar(
                                   backgroundImage: NetworkImage("https://media.istockphoto.com/id/619643870/photo/hungry-african-children-asking-for-food-africa.jpg?b=1&s=612x612&w=0&k=20&c=8IQr0y64vuvHGo59LXL1_CtR8cPU-1h5_AA1iV73yZI="),
                                 )),
                                 DataCell(Text(e['organizationName'])),

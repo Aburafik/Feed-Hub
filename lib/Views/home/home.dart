@@ -29,8 +29,11 @@ class HomeVC extends StatelessWidget {
               }
               if (snapshot.connectionState == ConnectionState.done &&
                   snapshot.data == null) {
-                return const Center(child: Text("No Dtata"));
+                return const Center(
+                  child: Text("No Dtata"),
+                );
               }
+              dynamic data = snapshot.data!.docs;
               return SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,18 +42,18 @@ class HomeVC extends StatelessWidget {
                     HomeHeadingComponent(
                       leading: "Recent NGOs Request",
                       onTap: () => Get.toNamed(RouterHelper.allNgoListView,
-                          arguments: controller.organizations),
+                          arguments: data),
                     ),
                     SizedBox(
                       height: 230,
                       child: ListView.builder(
                           shrinkWrap: true,
                           scrollDirection: Axis.horizontal,
-                          itemCount: snapshot.data!.docs.length,
+                          itemCount: data.length,
                           itemBuilder: (context, index) {
                             return NGosCard(
                               recentOrganizations:
-                                  controller.organizations[index],
+                                  data[index].data(),
                               organizations: controller.organizations,
                             );
                           }),
@@ -58,15 +61,15 @@ class HomeVC extends StatelessWidget {
                     HomeHeadingComponent(
                       leading: "Others Request",
                       onTap: () => Get.toNamed(RouterHelper.allNgoListView,
-                          arguments: controller.organizations),
+                          arguments: data),
                     ),
                     ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        itemCount: controller.organizations.length > 3 ? 3 : 2,
+                        itemCount: data.length,
                         itemBuilder: (context, index) {
                           return OtherRequestCardComponent(
-                            organizations: controller.organizations[index],
+                            organizations: data[index].data(),
                           );
                         })
                   ],
@@ -215,13 +218,24 @@ class NGosCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Feed Hungry Child",
+                      "${recentOrganizations['organizationName']}",
                       style: style.copyWith(fontSize: 15),
                     ),
                     const SizedBox(
                       height: 5,
                     ),
-                    const Text("Child Care Foundation"),
+                   Row(
+                    children: [
+                      const Icon(
+                        Icons.location_on,
+                        size: 15,
+                        color: Colors.grey,
+                      ),
+                      Text(
+                        recentOrganizations['location'],
+                      )
+                    ],
+                  ),
                     Padding(
                       padding: const EdgeInsets.only(top: 15, bottom: 5),
                       child: LinearPercentIndicator(
@@ -297,7 +311,6 @@ class HomeBanner extends StatelessWidget {
                   style: style,
                 ),
               ),
-             
             ],
           ),
           Image.asset(

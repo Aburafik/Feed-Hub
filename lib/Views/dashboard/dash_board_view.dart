@@ -47,22 +47,23 @@ class _DashBoardViewState extends State<DashBoardView> {
       (RemoteMessage? message) {
         RemoteNotification notification = message!.notification!;
         AndroidNotification android = message.notification!.android!;
-        if (notification != null && android != null) {
-          flutterLocalNotificationsPlugin.show(
-            notification.hashCode,
-            notification.title,
-            notification.body,
-            NotificationDetails(
-              android: AndroidNotificationDetails(
-                channel.id,
-                channel.name,
-                channelDescription: channel.description,
-                color: Colors.blue,
-                icon: "@mipmap/ic_launcher",
-              ),
+        flutterLocalNotificationsPlugin.show(
+          notification.hashCode,
+          notification.title,
+          notification.body,
+          NotificationDetails(
+            android: AndroidNotificationDetails(
+              channel.id,
+              channel.name,
+              channelDescription: channel.description,
+              color: Colors.blue,
+              icon: "@mipmap/ic_launcher",
             ),
-          );
-        }
+          ),
+        );
+
+        iOS:
+        DarwinNotificationDetails();
         print(message.notification!.title);
         donationServices.getNotification(
             title: notification.title, body: notification.body);
