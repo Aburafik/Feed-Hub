@@ -213,11 +213,11 @@ class _AddNewNGoComponentState extends State<AddNewNGoComponent> {
                   controller: organizationLocationController,
                 ),
               ),
-              FormFieldComponent(
-                label: "Token",
-                controller: tokenController,
-              ),
-              const SizedBox(height: 15),
+              // FormFieldComponent(
+              //   label: "Token",
+              //   controller: tokenController,
+              // ),
+              // const SizedBox(height: 15),
               FormFieldComponent(
                 maxLines: 4,
                 label: "Organization Description",
@@ -249,7 +249,7 @@ class _AddNewNGoComponentState extends State<AddNewNGoComponent> {
                             organizationDescriptionController.text,
                         image: imageUrls,
                         location: organizationLocationController.text);
-                    await AuthUser.sendPushMessage(token: tokenController.text);
+                    await AuthUser.sendPushMessage();
                   },
                 ),
               )

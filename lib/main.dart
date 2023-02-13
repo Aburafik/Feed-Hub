@@ -40,6 +40,7 @@ void main() async {
     badge: true,
     sound: true,
   );
+ await FirebaseMessaging.instance.subscribeToTopic("feedHub");
   runApp(const MyApp());
 }
 
