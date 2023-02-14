@@ -83,7 +83,8 @@ class _DashBoardViewState extends State<DashBoardView> {
 
   String? token;
   getToken() async {
-    await FirebaseMessaging.instance.subscribeToTopic('all');
+    await FirebaseMessaging.instance.subscribeToTopic("feedHub");
+
     token = await FirebaseMessaging.instance.getToken();
     print("###########FCM-TOKEN $token");
   }

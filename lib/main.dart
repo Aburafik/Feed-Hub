@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:feed_hub/Admin/chats/chats.dart';
 import 'package:feed_hub/Admin/donations/all_donations.dart';
 import 'package:feed_hub/Admin/home/admin_home.dart';
@@ -40,7 +39,6 @@ void main() async {
     badge: true,
     sound: true,
   );
- await FirebaseMessaging.instance.subscribeToTopic("feedHub");
   runApp(const MyApp());
 }
 
@@ -55,10 +53,8 @@ class _MyAppState extends State<MyApp> {
   final DynamicLinks initLink = DynamicLinks();
   @override
   void initState() {
-    // initLink.initLink();
     checkUserStatus();
 
-    // TODO: implement initState
     super.initState();
   }
 
@@ -254,9 +250,9 @@ layOutViewScreen({String? page}) {
     case "USERS":
       return UsersHomeVC();
     case "PUSH NOTIFICATIONS":
-      return PushNotifications();
+      return const PushNotifications();
     case "CHATS":
-      return Chats();
+      return const Chats();
     case "":
       return AdminHomeVC();
   }
@@ -279,5 +275,6 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
   description: 'This channel is used for important notifications.',
   importance: Importance.high,
 );
+
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
