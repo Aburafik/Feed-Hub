@@ -1,3 +1,4 @@
+import 'package:connectivity_wrapper/connectivity_wrapper.dart';
 import 'package:feed_hub/Services/auth_service.dart';
 import 'package:feed_hub/Services/donate_services.dart';
 import 'package:feed_hub/Views/chats/chats.dart';
@@ -31,7 +32,7 @@ class _DashBoardViewState extends State<DashBoardView> {
     screens = [
       HomeVC(),
       DonationHistoryVC(),
-      Chats(),
+      const Chats(),
       ProfileVC(),
     ];
     var iosInitialization = const DarwinInitializationSettings();
@@ -63,7 +64,7 @@ class _DashBoardViewState extends State<DashBoardView> {
         );
 
         iOS:
-        DarwinNotificationDetails();
+        const DarwinNotificationDetails();
         print(message.notification!.title);
         donationServices.getNotification(
             title: notification.title, body: notification.body);
@@ -109,11 +110,14 @@ class _DashBoardViewState extends State<DashBoardView> {
           )
         ],
       ),
-      body: PageView.builder(
-          physics: const NeverScrollableScrollPhysics(),
-          controller: _pageController,
-          itemCount: screens!.length,
-          itemBuilder: ((context, index) => screens![index])),
+      body: ConnectivityWidgetWrapper(
+        message: "Opps! Lost internet connection",
+        child: PageView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            controller: _pageController,
+            itemCount: screens!.length,
+            itemBuilder: ((context, index) => screens![index])),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: AppColors.primaryColor,
         unselectedItemColor: Colors.grey,
@@ -167,7 +171,7 @@ class AppDrawerComponent extends StatelessWidget {
             height: 10,
           ),
           ListTile(
-            leading: Icon(FeatherIcons.clock),
+            leading: const Icon(FeatherIcons.clock),
             title: Text(
               "Donation Overview",
               style: textStyle,
@@ -178,7 +182,7 @@ class AppDrawerComponent extends StatelessWidget {
             height: 10,
           ),
           ListTile(
-            leading: Icon(FeatherIcons.bookmark),
+            leading: const Icon(FeatherIcons.bookmark),
             title: Text(
               "About us",
               style: textStyle,
@@ -186,7 +190,7 @@ class AppDrawerComponent extends StatelessWidget {
           ),
           divider,
           ListTile(
-            leading: Icon(FeatherIcons.info),
+            leading: const Icon(FeatherIcons.info),
             title: Text(
               "Help",
               style: textStyle,
@@ -197,7 +201,7 @@ class AppDrawerComponent extends StatelessWidget {
             height: 10,
           ),
           ListTile(
-            leading: Icon(FeatherIcons.clock),
+            leading: const Icon(FeatherIcons.clock),
             title: Text("Share", style: textStyle),
           ),
           const Divider(
@@ -205,7 +209,7 @@ class AppDrawerComponent extends StatelessWidget {
             height: 10,
           ),
           ListTile(
-            leading: Icon(FeatherIcons.clock),
+            leading: const Icon(FeatherIcons.clock),
             title: Text(
               "Terms and Conditions",
               style: textStyle,
@@ -229,8 +233,8 @@ class AppDrawerComponent extends StatelessWidget {
                     "Logout",
                     style: textStyle,
                   ),
-                  SizedBox(width: 10),
-                  Icon(FeatherIcons.logOut),
+                  const SizedBox(width: 10),
+                  const Icon(FeatherIcons.logOut),
                 ],
               ),
             ),
@@ -240,3 +244,5 @@ class AppDrawerComponent extends StatelessWidget {
     );
   }
 }
+
+

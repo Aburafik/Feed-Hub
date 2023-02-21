@@ -41,14 +41,15 @@ class DonationServices {
         "senderLocation": user['location'],
         "senderContact": user["contact"],
         "userId": userId,
-        "status": false
+        "status": false,
+        "created": FieldValue.serverTimestamp()
       });
       stopLoading();
       donateSuccessMessage(context: context);
 
-      Future.delayed(Duration(seconds: 5), () {
+      Future.delayed(const Duration(seconds: 5), () {
         NotificationsController.showNotification(
-          body: "Your order was recieved successfully",
+          body: "Your donation was recieved successfully",
           title: "Hi ${user["userName"]}",
         );
       });
@@ -73,7 +74,8 @@ class DonationServices {
         "organizationName": organizationName,
         "organizationDescription": organizationDescription,
         "location": location,
-        "image": image
+        "image": image,
+        "created": FieldValue.serverTimestamp()
       }).then((value) {
         stopLoading();
 

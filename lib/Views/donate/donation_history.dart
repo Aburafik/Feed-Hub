@@ -6,8 +6,10 @@ import 'package:flutter/material.dart';
 class DonationHistoryVC extends StatelessWidget {
   DonationHistoryVC({super.key});
   static String userId = FirebaseAuth.instance.currentUser!.uid;
-  final Stream<QuerySnapshot> myDonationHistory =
-      FirebaseFirestore.instance.collection('AllDonations').snapshots();
+  final Stream<QuerySnapshot> myDonationHistory = FirebaseFirestore.instance
+      .collection('AllDonations')
+      .orderBy('created', descending: false)
+      .snapshots();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

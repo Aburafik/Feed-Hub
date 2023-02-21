@@ -12,8 +12,10 @@ class RecentDonationsComponent extends StatelessWidget {
   RecentDonationsComponent({
     Key? key,
   }) : super(key: key);
-  final Stream<QuerySnapshot> recentDonations =
-      FirebaseFirestore.instance.collection('AllDonations').snapshots();
+  final Stream<QuerySnapshot> recentDonations = FirebaseFirestore.instance
+      .collection('AllDonations')
+      .orderBy('created', descending: false)
+      .snapshots();
   final _db = FirebaseFirestore.instance;
   final DataController dataController = Get.put(DataController());
   @override
@@ -56,7 +58,9 @@ class RecentDonationsComponent extends StatelessWidget {
                           headingTextStyle: Theme.of(context)
                               .textTheme
                               .bodyText1!
-                              .copyWith(color: const  Color.fromARGB(255, 201, 202, 206)),
+                              .copyWith(
+                                  color:
+                                      const Color.fromARGB(255, 201, 202, 206)),
                           headingRowHeight: 30,
                           horizontalMargin: 20,
                           headingRowColor: MaterialStateProperty.all(
@@ -258,6 +262,7 @@ class RecentDonationsComponent extends StatelessWidget {
                                                                                 true,
                                                                           ),
                                                                         );
+                                                                        Get.back();
                                                                       },
                                                           )
                                                         ],

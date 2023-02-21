@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:connectivity_wrapper/connectivity_wrapper.dart';
 import 'package:feed_hub/Admin/chats/chats.dart';
 import 'package:feed_hub/Admin/donations/all_donations.dart';
 import 'package:feed_hub/Admin/home/admin_home.dart';
@@ -72,28 +73,30 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      builder: EasyLoading.init(),
-      debugShowCheckedModeBanner: false,
-      title: 'FEED HUB ADMIN',
-      theme: ThemeData(
-        scaffoldBackgroundColor: AppColors.backGroundColor,
-        appBarTheme: const AppBarTheme(
-          backgroundColor: AppColors.primaryColor,
-          elevation: .5,
-          centerTitle: true,
-          titleTextStyle: TextStyle(
-            color: AppColors.whiteColor,
+    return ConnectivityAppWrapper(
+      app: GetMaterialApp(
+        builder: EasyLoading.init(),
+        debugShowCheckedModeBanner: false,
+        title: 'FEED HUB ADMIN',
+        theme: ThemeData(
+          scaffoldBackgroundColor: AppColors.backGroundColor,
+          appBarTheme: const AppBarTheme(
+            backgroundColor: AppColors.primaryColor,
+            elevation: .5,
+            centerTitle: true,
+            titleTextStyle: TextStyle(
+              color: AppColors.whiteColor,
+            ),
+            iconTheme: IconThemeData(color: AppColors.whiteColor),
           ),
-          iconTheme: IconThemeData(color: AppColors.whiteColor),
         ),
+        initialRoute: GetPlatform.isWeb
+            ? RouterHelper.adminLogin
+            : userName == null
+                ? RouterHelper.signIn
+                : RouterHelper.dashBoard,
+        getPages: RouterHelper.router,
       ),
-      initialRoute: GetPlatform.isWeb
-          ? RouterHelper.adminLogin
-          : userName == null
-              ? RouterHelper.signIn
-              : RouterHelper.dashBoard,
-      getPages: RouterHelper.router,
     );
   }
 }

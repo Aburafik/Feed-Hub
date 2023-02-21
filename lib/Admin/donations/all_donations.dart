@@ -6,8 +6,10 @@ class AllDonations extends StatelessWidget {
   AllDonations({
     Key? key,
   }) : super(key: key);
-  final Stream<QuerySnapshot> recentDonations =
-      FirebaseFirestore.instance.collection('AllDonations').snapshots();
+  final Stream<QuerySnapshot> recentDonations = FirebaseFirestore.instance
+      .collection('AllDonations')
+      .orderBy('created', descending: false)
+      .snapshots();
   List allDonations = [];
 
   @override
@@ -34,7 +36,7 @@ class AllDonations extends StatelessWidget {
               stream: recentDonations,
               builder: ((context, snapshot) {
                 if (snapshot.hasData) {
-                  final donations = snapshot.data!.docs.reversed;
+                  final donations = snapshot.data!.docs;
 
                   print(donations.map((e) => e['dishName']));
                   return DataTable(
@@ -46,7 +48,8 @@ class AllDonations extends StatelessWidget {
                       headingTextStyle: Theme.of(context)
                           .textTheme
                           .bodyText1!
-                          .copyWith(color: const  Color.fromARGB(255, 201, 202, 206)),
+                          .copyWith(
+                              color: const Color.fromARGB(255, 201, 202, 206)),
                       headingRowHeight: 30,
                       horizontalMargin: 20,
                       headingRowColor: MaterialStateProperty.all(
