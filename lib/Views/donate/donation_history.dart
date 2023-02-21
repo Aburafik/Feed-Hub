@@ -26,8 +26,10 @@ class DonationHistoryVC extends StatelessWidget {
                   var dateTime =
                       DateTime.fromMillisecondsSinceEpoch(data['created']);
 
-                  var formatDate =
+                  var formatTime =
                       DateFormat('k:mm a').format(dateTime).toString();
+                  var formatDate =
+                      DateFormat('EEE, M/d/y').format(dateTime).toString();
                   /////
                   return !data["userId"].toString().contains(userId)
                       ? Column(
@@ -46,8 +48,8 @@ class DonationHistoryVC extends StatelessWidget {
                       : data["userId"] == userId
                           ? Card(
                               child: ListTile(
-                                title: const Text("Donated to:"),
-                                subtitle: Text(data['created']),
+                                title: Text("Donated to\n${data["name"]}"),
+                                subtitle: Text(formatDate),
                                 leading: const Icon(
                                   Icons.check_circle_outline,
                                 ),
@@ -75,7 +77,7 @@ class DonationHistoryVC extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-                                    const Icon(Icons.more_horiz),
+                                    Text(formatTime)
                                   ],
                                 ),
                               ),
@@ -92,16 +94,3 @@ class DonationHistoryVC extends StatelessWidget {
     );
   }
 }
-// Column(
-//                           mainAxisAlignment: MainAxisAlignment.center,
-//                           children: [
-//                             SizedBox(
-//                                 height:
-//                                     MediaQuery.of(context).size.height / 2.5),
-//                             Image.asset(
-//                               Images.folder,
-//                               height: 80,
-//                             ),
-//                             const Text("No Donaton Histroy"),
-//                           ],
-//                         );

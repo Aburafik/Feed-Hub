@@ -5,6 +5,7 @@ import 'package:feed_hub/Services/donate_services.dart';
 import 'package:feed_hub/Utils/colors.dart';
 import 'package:feed_hub/Utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/instance_manager.dart';
 
 class DonateFormVC extends StatefulWidget {
@@ -27,6 +28,7 @@ class _DonateFormVCState extends State<DonateFormVC> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.whiteColor,
       appBar: AppBar(
         title: const Text(
           "Donate",
@@ -40,6 +42,7 @@ class _DonateFormVCState extends State<DonateFormVC> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Text(Get.arguments.toString()),
                 Align(
                   child: Text(
                     "Food Details",
@@ -86,13 +89,13 @@ class _DonateFormVCState extends State<DonateFormVC> {
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         await _donateItem.donateItem(
-                          context: context,
-                          dishName: foodNameController.text,
-                          foodQuantity: foodQualityController.text,
-                          pickUpDate: pickUpDateController.text,
-                          pickUpLocation: pickUpLocationController.text,
-                          furtherInfor: furtherDirectionsController.text,
-                        );
+                            context: context,
+                            dishName: foodNameController.text,
+                            foodQuantity: foodQualityController.text,
+                            pickUpDate: pickUpDateController.text,
+                            pickUpLocation: pickUpLocationController.text,
+                            furtherInfor: furtherDirectionsController.text,
+                            name: Get.arguments.toString());
                         Get.put(OrganizationsController());
                       }
                     })

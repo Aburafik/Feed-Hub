@@ -160,10 +160,10 @@ class RecentDonationsComponent extends StatelessWidget {
                                                             trailing:
                                                                 e['dishName'],
                                                           ),
-                                                          const DetailsWidgetComponent(
+                                                           DetailsWidgetComponent(
                                                             leading:
                                                                 "Organization Donated to:",
-                                                            trailing: "General",
+                                                            trailing: e["name"],
                                                           ),
                                                           DetailsWidgetComponent(
                                                             leading:

@@ -97,8 +97,11 @@ class HomeDetailsView extends StatelessWidget {
                       children: [
                         CommonButton(
                           buttonText: "Donate",
-                          onPressed: () =>
-                              Get.toNamed(RouterHelper.donateFormView),
+                          onPressed: () => Get.toNamed(
+                            RouterHelper.donateFormView,
+                            arguments:
+                                Get.arguments['organizationName']!.toString(),
+                          ),
                         ),
                       ],
                     ),

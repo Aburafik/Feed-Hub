@@ -24,6 +24,7 @@ class DonationServices {
     String? pickUpDate,
     String? pickUpLocation,
     String? furtherInfor,
+    String? name,
     BuildContext? context,
   }) async {
     try {
@@ -40,6 +41,7 @@ class DonationServices {
         "senderName": user["userName"],
         "senderLocation": user['location'],
         "senderContact": user["contact"],
+        "name":name,
         "userId": userId,
         "status": false,
         "created": Timestamp.now().millisecondsSinceEpoch
