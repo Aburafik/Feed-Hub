@@ -36,7 +36,7 @@ class AllDonations extends StatelessWidget {
               stream: recentDonations,
               builder: ((context, snapshot) {
                 if (snapshot.hasData) {
-                  final donations = snapshot.data!.docs;
+                  final donations = snapshot.data!.docs.reversed;
 
                   print(donations.map((e) => e['dishName']));
                   return DataTable(

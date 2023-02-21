@@ -42,7 +42,7 @@ class DonationServices {
         "senderContact": user["contact"],
         "userId": userId,
         "status": false,
-        "created": FieldValue.serverTimestamp()
+        "created": Timestamp.now().millisecondsSinceEpoch
       });
       stopLoading();
       donateSuccessMessage(context: context);
@@ -75,7 +75,7 @@ class DonationServices {
         "organizationDescription": organizationDescription,
         "location": location,
         "image": image,
-        "created": FieldValue.serverTimestamp()
+        "created": Timestamp.now().millisecondsSinceEpoch
       }).then((value) {
         stopLoading();
 

@@ -2,13 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:feed_hub/Utils/images.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class DonationHistoryVC extends StatelessWidget {
   DonationHistoryVC({super.key});
   static String userId = FirebaseAuth.instance.currentUser!.uid;
   final Stream<QuerySnapshot> myDonationHistory = FirebaseFirestore.instance
       .collection('AllDonations')
-      .orderBy('created', descending: false)
+      .orderBy('created', descending: true)
       .snapshots();
   @override
   Widget build(BuildContext context) {
@@ -21,6 +22,13 @@ class DonationHistoryVC extends StatelessWidget {
                 itemCount: snapshot.data!.docs.length,
                 itemBuilder: (context, index) {
                   dynamic data = snapshot.data!.docs[index].data();
+
+                  var dateTime =
+                      DateTime.fromMillisecondsSinceEpoch(data['created']);
+
+                  var formatDate =
+                      DateFormat('k:mm a').format(dateTime).toString();
+                  /////
                   return !data["userId"].toString().contains(userId)
                       ? Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -39,7 +47,7 @@ class DonationHistoryVC extends StatelessWidget {
                           ? Card(
                               child: ListTile(
                                 title: const Text("Donated to:"),
-                                subtitle: const Text("erjfjnfvjf"),
+                                subtitle: Text(data['created']),
                                 leading: const Icon(
                                   Icons.check_circle_outline,
                                 ),
