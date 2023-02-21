@@ -20,8 +20,11 @@ class Chats extends StatefulWidget {
 class _ChatsState extends State<Chats> {
   final TextEditingController _questionController = TextEditingController();
 
-  final Stream<QuerySnapshot> _questionsAndAnswersStream =
-      FirebaseFirestore.instance.collection('questionsAndAnswers').snapshots();
+  final Stream<QuerySnapshot> _questionsAndAnswersStream = FirebaseFirestore
+      .instance
+      .collection('questionsAndAnswers')
+      .orderBy('created_at', descending: true)
+      .snapshots();
   String? senderName;
   String? senderEmail;
   String? senderContact;

@@ -19,16 +19,16 @@ class SignUP extends StatelessWidget {
   Widget build(BuildContext context) {
     TextStyle style = Theme.of(context).textTheme.bodyText1!;
     return Scaffold(
+      backgroundColor: AppColors.whiteColor,
       body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
-              height: MediaQuery.of(context).size.height / 3.2,
-              color: AppColors.lightGreyColor,
-              child: appLogo()
-            ),
+                height: MediaQuery.of(context).size.height / 3.2,
+                color: AppColors.lightGreyColor,
+                child: appLogo()),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8,vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -108,6 +108,3 @@ class SignUP extends StatelessWidget {
     );
   }
 }
-
-
-

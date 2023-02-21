@@ -18,7 +18,7 @@ class HomeVC extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // drawer: const Drawer(),
+      drawer: const Drawer(),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: StreamBuilder<QuerySnapshot>(
@@ -52,8 +52,7 @@ class HomeVC extends StatelessWidget {
                           itemCount: data.length,
                           itemBuilder: (context, index) {
                             return NGosCard(
-                              recentOrganizations:
-                                  data[index].data(),
+                              recentOrganizations: data[index].data(),
                               organizations: controller.organizations,
                             );
                           }),
@@ -224,18 +223,18 @@ class NGosCard extends StatelessWidget {
                     const SizedBox(
                       height: 5,
                     ),
-                   Row(
-                    children: [
-                      const Icon(
-                        Icons.location_on,
-                        size: 15,
-                        color: Colors.grey,
-                      ),
-                      Text(
-                        recentOrganizations['location'],
-                      )
-                    ],
-                  ),
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.location_on,
+                          size: 15,
+                          color: Colors.grey,
+                        ),
+                        Text(
+                          recentOrganizations['location'],
+                        )
+                      ],
+                    ),
                     Padding(
                       padding: const EdgeInsets.only(top: 15, bottom: 5),
                       child: LinearPercentIndicator(

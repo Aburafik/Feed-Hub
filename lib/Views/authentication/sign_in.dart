@@ -42,6 +42,7 @@ class _SignInState extends State<SignIn> {
   Widget build(BuildContext context) {
     TextStyle style = Theme.of(context).textTheme.bodyText1!;
     return Scaffold(
+      backgroundColor: AppColors.whiteColor,
       body: SingleChildScrollView(
         child: Column(
           children: [

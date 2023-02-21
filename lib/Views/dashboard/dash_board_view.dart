@@ -63,7 +63,6 @@ class _DashBoardViewState extends State<DashBoardView> {
           ),
         );
 
-        
         const DarwinNotificationDetails();
         print(message.notification!.title);
         donationServices.getNotification(
@@ -166,20 +165,15 @@ class AppDrawerComponent extends StatelessWidget {
             ),
             onTap: () {},
           ),
-          const Divider(
-            color: Colors.grey,
-            height: 10,
-          ),
-          ListTile(
-            leading: const Icon(FeatherIcons.clock),
-            title: Text(
-              "Donation Overview",
-              style: textStyle,
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: ListTile(
+              leading: const Icon(FeatherIcons.clock),
+              title: Text(
+                "Donation Overview",
+                style: textStyle,
+              ),
             ),
-          ),
-          const Divider(
-            color: Colors.grey,
-            height: 10,
           ),
           ListTile(
             leading: const Icon(FeatherIcons.bookmark),
@@ -188,36 +182,29 @@ class AppDrawerComponent extends StatelessWidget {
               style: textStyle,
             ),
           ),
-          divider,
-          ListTile(
-            leading: const Icon(FeatherIcons.info),
-            title: Text(
-              "Help",
-              style: textStyle,
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: ListTile(
+              leading: const Icon(FeatherIcons.info),
+              title: Text(
+                "Help",
+                style: textStyle,
+              ),
             ),
-          ),
-          const Divider(
-            color: Colors.grey,
-            height: 10,
           ),
           ListTile(
             leading: const Icon(FeatherIcons.clock),
             title: Text("Share", style: textStyle),
           ),
-          const Divider(
-            color: Colors.grey,
-            height: 10,
-          ),
-          ListTile(
-            leading: const Icon(FeatherIcons.clock),
-            title: Text(
-              "Terms and Conditions",
-              style: textStyle,
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: ListTile(
+              leading: const Icon(FeatherIcons.clock),
+              title: Text(
+                "Terms and Conditions",
+                style: textStyle,
+              ),
             ),
-          ),
-          const Divider(
-            color: Colors.grey,
-            height: 10,
           ),
           const SizedBox(height: 20),
           GestureDetector(
@@ -225,9 +212,8 @@ class AppDrawerComponent extends StatelessWidget {
               await _authUser.logOut();
             },
             child: Padding(
-              padding: const EdgeInsets.only(left: 20),
+              padding: const EdgeInsets.only(left: 40),
               child: Row(
-                // mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     "Logout",
@@ -244,5 +230,3 @@ class AppDrawerComponent extends StatelessWidget {
     );
   }
 }
-
-
