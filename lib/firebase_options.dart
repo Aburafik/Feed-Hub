@@ -44,40 +44,40 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBMtACai6PpiB29tWVibWdl3y0dbWirdGM',
-    appId: '1:944602773348:web:c356e6bc510494b9342c71',
-    messagingSenderId: '944602773348',
-    projectId: 'feed-hub-5dab3',
-    authDomain: 'feed-hub-5dab3.firebaseapp.com',
-    storageBucket: 'feed-hub-5dab3.appspot.com',
-    measurementId: 'G-0CJB4H2HG1',
+    apiKey: 'AIzaSyBfPIulsif4iXDesx7TIR8c2phMo_TV6HU',
+    appId: '1:483352088089:web:19997432737416b81da488',
+    messagingSenderId: '483352088089',
+    projectId: 'feedhub-f42a9',
+    authDomain: 'feedhub-f42a9.firebaseapp.com',
+    storageBucket: 'feedhub-f42a9.appspot.com',
+    measurementId: 'G-HJBFN6E89N',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBvkpw74x3eGzVXlOHjTysV9ZYNW4IySYQ',
-    appId: '1:944602773348:android:e36f9b9985b9eb52342c71',
-    messagingSenderId: '944602773348',
-    projectId: 'feed-hub-5dab3',
-    storageBucket: 'feed-hub-5dab3.appspot.com',
+    apiKey: 'AIzaSyBo5XLxO6SeTzm9ySX2Vrqg1xCq89iFBOY',
+    appId: '1:483352088089:android:86bb630b26e5b35b1da488',
+    messagingSenderId: '483352088089',
+    projectId: 'feedhub-f42a9',
+    storageBucket: 'feedhub-f42a9.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCVb1fb-fD6D8Adgu7k74aqe7Vr-lck9v8',
-    appId: '1:944602773348:ios:5ef2e77352b1565c342c71',
-    messagingSenderId: '944602773348',
-    projectId: 'feed-hub-5dab3',
-    storageBucket: 'feed-hub-5dab3.appspot.com',
-    iosClientId: '944602773348-oem2i0fof3j76i8moupm5tbfauv7eqj0.apps.googleusercontent.com',
-    iosBundleId: 'com.example.feedHub',
+    apiKey: 'AIzaSyBo5XLxO6SeTzm9ySX2Vrqg1xCq89iFBOY',
+    appId: '1:483352088089:ios:4910c7fa2d1485a91da488',
+    messagingSenderId: '483352088089',
+    projectId: 'feedhub-f42a9',
+    storageBucket: 'feedhub-f42a9.appspot.com',
+    iosClientId: '483352088089-15hrp2i6l2j8ogcivahr1ha4af7184u4.apps.googleusercontent.com',
+    iosBundleId: 'com.citizenraf.feedhub',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCVb1fb-fD6D8Adgu7k74aqe7Vr-lck9v8',
-    appId: '1:944602773348:ios:5ef2e77352b1565c342c71',
-    messagingSenderId: '944602773348',
-    projectId: 'feed-hub-5dab3',
-    storageBucket: 'feed-hub-5dab3.appspot.com',
-    iosClientId: '944602773348-oem2i0fof3j76i8moupm5tbfauv7eqj0.apps.googleusercontent.com',
-    iosBundleId: 'com.example.feedHub',
+    apiKey: 'AIzaSyBo5XLxO6SeTzm9ySX2Vrqg1xCq89iFBOY',
+    appId: '1:483352088089:ios:4910c7fa2d1485a91da488',
+    messagingSenderId: '483352088089',
+    projectId: 'feedhub-f42a9',
+    storageBucket: 'feedhub-f42a9.appspot.com',
+    iosClientId: '483352088089-15hrp2i6l2j8ogcivahr1ha4af7184u4.apps.googleusercontent.com',
+    iosBundleId: 'com.citizenraf.feedhub',
   );
 }

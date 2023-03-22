@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.feed_hub">
+    package="com.citizenraf.feedhub">
      <uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="FEED HUB"
@@ -31,7 +31,7 @@
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
                 <data
-                    android:host="com.example.feed_hub"
+                    android:host="com.citizenraf.feedhub"
                     android:scheme="https"/>
              </intent-filter>
 

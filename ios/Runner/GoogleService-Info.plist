@@ -7,13 +7,13 @@
 	<key>REVERSED_CLIENT_ID</key>
 	<string>com.googleusercontent.apps.944602773348-oem2i0fof3j76i8moupm5tbfauv7eqj0</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCVb1fb-fD6D8Adgu7k74aqe7Vr-lck9v8</string>
+	<string>AIzaSyBo5XLxO6SeTzm9ySX2Vrqg1xCq89iFBOY</string>
 	<key>GCM_SENDER_ID</key>
 	<string>944602773348</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.feedHub</string>
+	<string>com.citizenraf.feedhub</string>
 	<key>PROJECT_ID</key>
 	<string>feed-hub-5dab3</string>
 	<key>STORAGE_BUCKET</key>

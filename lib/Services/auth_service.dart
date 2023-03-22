@@ -63,14 +63,14 @@ class AuthUser {
       if (e.code == 'weak-password') {
         showSnackbar(
             messsage: 'The password provided is too weak.', context: context);
-        // print('The password provided is too weak.');
+        print('The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
         stopLoading();
         showSnackbar(
             messsage: 'The account already exists for that email.',
             context: context);
 
-        // print('The account already exists for that email.');
+        print('The account already exists for that email.');
       }
     } on SocketException {
       stopLoading();
@@ -200,7 +200,7 @@ class AuthUser {
 
     try {
       String serverKey =
-          "AAAA2-62d2Q:APA91bGOKTMwQpIKEUktzY6bT4OfqvB_HNGNMCsbb1WQv2qfgVhSCGv13Oaug1PoX-HcYp3TsRye2RpGfJbkHCg--oqSnYP_HXXIND83gfRkxpzaeFUB5Fm8_GSDj1sL1VrrmVfMpmn5";
+          "AAAAcIoHjhk:APA91bHJvsYzXghQbBUSdDgBwJORY9NRoKEZoqx7yx29drG6H-x2Sa92Gu7YI24_ArWOlHSVRGqJRywPkNAjaAbqVEqKCBo-Qmy0iL-BPfr7V2iavIUuFAC0w5zYb0NDYUzMSA9wZRcm";
       await http.post(
         Uri.parse('https://fcm.googleapis.com/fcm/send'),
         headers: <String, String>{

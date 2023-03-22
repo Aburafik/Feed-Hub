@@ -89,7 +89,7 @@ class _SignInState extends State<SignIn> {
                             context: context,
                           );
 
-                          await _userServices.getUser();
+                          // await _userServices.getUser();
                         }
                       },
                       buttonText: "Sign In",

@@ -14,19 +14,21 @@ class DynamicLinks {
       final Uri uri = value!.link;
       var isStore = uri.queryParameters.containsKey("link");
       if (isStore) {
-        print("##################${uri.queryParameters['link']}#############################");
+        print(
+            "##################${uri.queryParameters['link']}#############################");
         handleToken(value.link);
       }
     });
   }
+
 //  ./gradlew signingReport
   Future<String> createDynamicLink({bool? short, String? link}) async {
-    String urls = "https://com.example.feed_hub/?link=$link";
+    String urls = "https://com.citizenraf.feedhub/?link=$link";
     final DynamicLinkParameters parameters = DynamicLinkParameters(
       uriPrefix: "https://feedhub.page.link",
       link: Uri.parse(urls),
       androidParameters: const AndroidParameters(
-        packageName: 'com.example.feed_hub',
+        packageName: 'com.citizenraf.feedhub',
         minimumVersion: 0,
       ),
     );

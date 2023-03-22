@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "944602773348",
-    "project_id": "feed-hub-5dab3",
-    "storage_bucket": "feed-hub-5dab3.appspot.com"
+    "project_number": "483352088089",
+    "project_id": "feedhub-f42a9",
+    "storage_bucket": "feedhub-f42a9.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:944602773348:android:e36f9b9985b9eb52342c71",
+        "mobilesdk_app_id": "1:483352088089:android:86bb630b26e5b35b1da488",
         "android_client_info": {
-          "package_name": "com.example.feed_hub"
+          "package_name": "com.citizenraf.feedhub"
         }
       },
       "oauth_client": [
         {
-          "client_id": "944602773348-nqefimc4huiflj7115k6vd3jqj0ql27n.apps.googleusercontent.com",
+          "client_id": "483352088089-pclan5usdgp5n4a6utnft5fld1aju1nb.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBvkpw74x3eGzVXlOHjTysV9ZYNW4IySYQ"
+          "current_key": "AIzaSyBo5XLxO6SeTzm9ySX2Vrqg1xCq89iFBOY"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "944602773348-nqefimc4huiflj7115k6vd3jqj0ql27n.apps.googleusercontent.com",
+              "client_id": "483352088089-pclan5usdgp5n4a6utnft5fld1aju1nb.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

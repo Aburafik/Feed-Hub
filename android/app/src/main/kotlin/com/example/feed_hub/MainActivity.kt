@@ -1,4 +1,4 @@
-package com.example.feed_hub
+package com.citizenraf.feedhub
 
 import io.flutter.embedding.android.FlutterActivity
 

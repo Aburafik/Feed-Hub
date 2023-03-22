@@ -4,6 +4,7 @@ import 'package:bubble/bubble.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:feed_hub/Services/auth_service.dart';
 import 'package:feed_hub/Utils/colors.dart';
+import 'package:feed_hub/Utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -153,10 +154,11 @@ class _ChatsState extends State<Chats> {
                         currentFocus.unfocus();
                       }
                       if (_questionController.text.isEmpty) {
-                        // showToast(
-                        //     msg:
-                        //         "Question field can't be empty.Please enter question",
-                        //     color: Colors.red);
+                        showSnackbar(
+                            context: context,
+                            messsage:
+                                "Question field can't be empty.Please enter question",
+                            isError: true);
                       } else {
                         await _authUser.sendQuestion(
                             id: _auth.currentUser!.uid,
