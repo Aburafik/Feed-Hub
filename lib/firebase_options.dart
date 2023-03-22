@@ -44,7 +44,7 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBfPIulsif4iXDesx7TIR8c2phMo_TV6HU',
+    apiKey: 'AIzaSyBo5XLxO6SeTzm9ySX2Vrqg1xCq89iFBOY',
     appId: '1:483352088089:web:19997432737416b81da488',
     messagingSenderId: '483352088089',
     projectId: 'feedhub-f42a9',
