@@ -179,20 +179,20 @@ class AuthUser {
     });
   }
 
-  static String constructFCMPayload() {
+  static String constructFCMPayload({String? message, String? title}) {
     return jsonEncode({
       'to': "/topics/feedHub",
       'data': {
         'via': 'FlutterFire Cloud Messaging!!!',
       },
       'notification': {
-        'title': 'Hi!',
-        'body': 'A New organization food request has been uploaded!',
+        'title': title,
+        'body': message
       },
     });
   }
 
-  static Future<void> sendPushMessage() async {
+  static Future<void> sendPushMessage({String? message, String? title}) async {
     // if (token == null) {
     //   print('Unable to send FCM message, no token exists.');
     //   return;
@@ -207,11 +207,51 @@ class AuthUser {
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'key=$serverKey'
         },
-        body: constructFCMPayload(),
+        body: constructFCMPayload(title: title,message: message),
       );
       print('FCM request for device sent!');
     } catch (e) {
       print(e);
     }
   }
+
+
+  ////UPDATE USER
+  static String constructFCMPayloadForAparticularUser({String? id}) {
+    return jsonEncode({
+      'to': "/topics/$id",
+      'data': {
+        'via': 'FlutterFire Cloud Messaging!!!',
+      },
+      'notification': {
+        'title': 'Hi!',
+        'body': 'A New organization food request has been uploaded!',
+      },
+    });
+  }
+
+  static Future<void> sendPushMessageToUser({String? id}) async {
+    // if (token == null) {
+    //   print('Unable to send FCM message, no token exists.');
+    //   return;
+    // }
+
+    try {
+      String serverKey =
+          "AAAAcIoHjhk:APA91bHJvsYzXghQbBUSdDgBwJORY9NRoKEZoqx7yx29drG6H-x2Sa92Gu7YI24_ArWOlHSVRGqJRywPkNAjaAbqVEqKCBo-Qmy0iL-BPfr7V2iavIUuFAC0w5zYb0NDYUzMSA9wZRcm";
+      await http.post(
+        Uri.parse('https://fcm.googleapis.com/fcm/send'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'key=$serverKey'
+        },
+        body: constructFCMPayloadForAparticularUser(id: id),
+      );
+      print('FCM request for device sent!');
+    } catch (e) {
+      print(e);
+    }
+  }
+
+
 }

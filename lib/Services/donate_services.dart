@@ -27,11 +27,12 @@ class DonationServices {
     String? name,
     BuildContext? context,
   }) async {
+    startLoading(status: "sending request");
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    final userProfile = pref.getString('user');
+    Map<String, dynamic> user = json.decode(userProfile!);
+    print(user);
     try {
-      startLoading(status: "sending request");
-      SharedPreferences pref = await SharedPreferences.getInstance();
-      final userProfile = pref.getString('user');
-      Map<String, dynamic> user = json.decode(userProfile!);
       await alldonations.add({
         "dishName": dishName,
         "foodQuantity": foodQuantity,
@@ -41,7 +42,7 @@ class DonationServices {
         "senderName": user["userName"],
         "senderLocation": user['location'],
         "senderContact": user["contact"],
-        "name":name,
+        "name": name,
         "userId": userId,
         "status": false,
         "created": Timestamp.now().millisecondsSinceEpoch
@@ -60,7 +61,12 @@ class DonationServices {
     } catch (e) {
       stopLoading();
       print(e);
-      showSnackbar(messsage: "Oppps something went wrong", isError: true);
+      print(user);
+
+      showSnackbar(
+          messsage: "Oppps something went wrong",
+          isError: true,
+          context: context);
     }
   }
 
@@ -85,6 +91,33 @@ class DonationServices {
       });
       showSnackbar(
           messsage: "Organization uploaded successfully", context: context!);
+    } catch (e) {
+      stopLoading();
+      showSnackbar(
+          messsage: "Oppps something went wrong",
+          isError: true,
+          context: context!);
+    }
+  }
+
+  sendPushNotication({
+    String? title,
+    String? body,
+    BuildContext? context,
+  }) async {
+    startLoading();
+
+    try {
+      await notifications.add({
+        "title": title,
+        "body": body,
+        "created": Timestamp.now().millisecondsSinceEpoch
+      }).then((value) {
+        stopLoading();
+
+        Get.back();
+      });
+      showSnackbar(messsage: "Message sent successfully", context: context!);
     } catch (e) {
       stopLoading();
       showSnackbar(

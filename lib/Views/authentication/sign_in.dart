@@ -25,7 +25,6 @@ class _SignInState extends State<SignIn> {
 
   final TextEditingController emailController = TextEditingController();
 
-  final UserServices _userServices = UserServices();
 
   final AuthUser _authUser = AuthUser();
 

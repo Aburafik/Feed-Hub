@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:feed_hub/Admin/home/admin_home.dart';
 import 'package:feed_hub/Components/common_button.dart';
 import 'package:feed_hub/Controllers/getData_controller.dart';
+import 'package:feed_hub/Services/auth_service.dart';
 import 'package:feed_hub/Utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
@@ -18,8 +19,11 @@ class RecentDonationsComponent extends StatelessWidget {
       .snapshots();
   final _db = FirebaseFirestore.instance;
   final DataController dataController = Get.put(DataController());
+  AuthUser authUser = AuthUser();
   @override
   Widget build(BuildContext context) {
+    TextStyle style =
+        Theme.of(context).textTheme.headlineSmall!.copyWith(fontSize: 16);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 15),
       child: Card(
@@ -77,11 +81,16 @@ class RecentDonationsComponent extends StatelessWidget {
                           ],
                           rows: donations
                               .map((e) => DataRow(cells: [
-                                    DataCell(Text(e['senderName'])),
-                                    DataCell(Text(e["senderLocation"])),
-                                    DataCell(Text(e["senderContact"])),
-                                    DataCell(Text(e["pickUpDate"])),
-                                    DataCell(Text(e["pickUpLocation"])),
+                                    DataCell(
+                                        Text(e['senderName'], style: style)),
+                                    DataCell(Text(e["senderLocation"],
+                                        style: style)),
+                                    DataCell(
+                                        Text(e["senderContact"], style: style)),
+                                    DataCell(
+                                        Text(e["pickUpDate"], style: style)),
+                                    DataCell(Text(e["pickUpLocation"],
+                                        style: style)),
                                     DataCell(
                                       Material(
                                         shape: RoundedRectangleBorder(
@@ -160,7 +169,7 @@ class RecentDonationsComponent extends StatelessWidget {
                                                             trailing:
                                                                 e['dishName'],
                                                           ),
-                                                           DetailsWidgetComponent(
+                                                          DetailsWidgetComponent(
                                                             leading:
                                                                 "Organization Donated to:",
                                                             trailing: e["name"],
@@ -262,6 +271,8 @@ class RecentDonationsComponent extends StatelessWidget {
                                                                                 true,
                                                                           ),
                                                                         );
+                                                                        await AuthUser.sendPushMessageToUser(
+                                                                            id: e['userId']);
                                                                         Get.back();
                                                                       },
                                                           )

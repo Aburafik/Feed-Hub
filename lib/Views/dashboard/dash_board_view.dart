@@ -1,12 +1,14 @@
 import 'package:connectivity_wrapper/connectivity_wrapper.dart';
 import 'package:feed_hub/Services/auth_service.dart';
 import 'package:feed_hub/Services/donate_services.dart';
+import 'package:feed_hub/Services/user_services.dart';
 import 'package:feed_hub/Views/chats/chats.dart';
 import 'package:feed_hub/Utils/colors.dart';
 import 'package:feed_hub/Views/donate/donation_history.dart';
 import 'package:feed_hub/Views/home/home.dart';
 import 'package:feed_hub/Views/profile/profile_view.dart';
 import 'package:feed_hub/main.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -24,6 +26,8 @@ class _DashBoardViewState extends State<DashBoardView> {
   int _pageIndex = 0;
   PageController? _pageController;
   final DonationServices donationServices = DonationServices();
+  final UserServices _userServices = UserServices();
+  FirebaseAuth auth = FirebaseAuth.instance;
   List<Widget>? screens;
   @override
   void initState() {
@@ -78,12 +82,15 @@ class _DashBoardViewState extends State<DashBoardView> {
       );
     });
     getToken();
+    _userServices.getUser();
     super.initState();
   }
 
   String? token;
   getToken() async {
     await FirebaseMessaging.instance.subscribeToTopic("feedHub");
+    await FirebaseMessaging.instance
+        .subscribeToTopic(auth.currentUser!.uid.toString());
 
     token = await FirebaseMessaging.instance.getToken();
     print("###########FCM-TOKEN $token");

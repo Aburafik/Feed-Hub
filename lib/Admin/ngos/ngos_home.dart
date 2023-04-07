@@ -22,6 +22,8 @@ class NgOsHomeVC extends StatelessWidget {
   final DataController dataController = Get.find<DataController>();
   @override
   Widget build(BuildContext context) {
+    TextStyle style =
+        Theme.of(context).textTheme.headlineSmall!.copyWith(fontSize: 13);
     return Scaffold(
       body: Column(
         children: [
@@ -53,9 +55,9 @@ class NgOsHomeVC extends StatelessWidget {
           ),
           Expanded(
               child: SingleChildScrollView(
-                child: StreamBuilder<QuerySnapshot>(
-                          stream: organizations,
-                          builder: ((context, snapshot) {
+            child: StreamBuilder<QuerySnapshot>(
+              stream: organizations,
+              builder: ((context, snapshot) {
                 if (snapshot.hasData) {
                   final ngos = snapshot.data!.docs.reversed;
                   dataController.getAllNGOs(ngos.length);
@@ -71,8 +73,8 @@ class NgOsHomeVC extends StatelessWidget {
                           .copyWith(color: Color.fromARGB(255, 201, 202, 206)),
                       headingRowHeight: 30,
                       horizontalMargin: 20,
-                      headingRowColor:
-                          MaterialStateProperty.all(AppColors.adminPrimaryColor),
+                      headingRowColor: MaterialStateProperty.all(
+                          AppColors.adminPrimaryColor),
                       columns: const [
                         DataColumn(label: Text("Image")),
                         DataColumn(
@@ -87,12 +89,22 @@ class NgOsHomeVC extends StatelessWidget {
                       ],
                       rows: ngos
                           .map((e) => DataRow(cells: [
-                               const DataCell(CircleAvatar(
-                                  backgroundImage: NetworkImage("https://media.istockphoto.com/id/619643870/photo/hungry-african-children-asking-for-food-africa.jpg?b=1&s=612x612&w=0&k=20&c=8IQr0y64vuvHGo59LXL1_CtR8cPU-1h5_AA1iV73yZI="),
+                                const DataCell(CircleAvatar(
+                                  backgroundImage: NetworkImage(
+                                      "https://media.istockphoto.com/id/619643870/photo/hungry-african-children-asking-for-food-africa.jpg?b=1&s=612x612&w=0&k=20&c=8IQr0y64vuvHGo59LXL1_CtR8cPU-1h5_AA1iV73yZI="),
                                 )),
-                                DataCell(Text(e['organizationName'])),
-                                DataCell(Text(e["organizationDescription"])),
-                                DataCell(Text(e["location"])),
+                                DataCell(Text(
+                                  e['organizationName'],
+                                  style: style,
+                                )),
+                                DataCell(Text(
+                                  e["organizationDescription"],
+                                  style: style,
+                                )),
+                                DataCell(Text(
+                                  e["location"],
+                                  style: style,
+                                )),
                                 const DataCell(Icon(FeatherIcons.edit)),
                               ]))
                           .toList());
@@ -103,9 +115,9 @@ class NgOsHomeVC extends StatelessWidget {
                     ),
                   );
                 }
-                          }),
-                        ),
-              ))
+              }),
+            ),
+          ))
         ],
       ),
     );
@@ -249,7 +261,11 @@ class _AddNewNGoComponentState extends State<AddNewNGoComponent> {
                             organizationDescriptionController.text,
                         image: imageUrls,
                         location: organizationLocationController.text);
-                    await AuthUser.sendPushMessage();
+                    await AuthUser.sendPushMessage(
+                      title: "Hi",
+                      message:
+                          'A New organization food request has been uploaded!',
+                    );
                   },
                 ),
               )

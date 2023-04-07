@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>944602773348-oem2i0fof3j76i8moupm5tbfauv7eqj0.apps.googleusercontent.com</string>
+	<string>483352088089-15hrp2i6l2j8ogcivahr1ha4af7184u4.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.944602773348-oem2i0fof3j76i8moupm5tbfauv7eqj0</string>
+	<string>com.googleusercontent.apps.483352088089-15hrp2i6l2j8ogcivahr1ha4af7184u4</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBo5XLxO6SeTzm9ySX2Vrqg1xCq89iFBOY</string>
+	<string>AIzaSyD_7mLyMsA3svOYOX7meCJT5GyOCW207PI</string>
 	<key>GCM_SENDER_ID</key>
-	<string>944602773348</string>
+	<string>483352088089</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.citizenraf.feedhub</string>
 	<key>PROJECT_ID</key>
-	<string>feed-hub-5dab3</string>
+	<string>feedhub-f42a9</string>
 	<key>STORAGE_BUCKET</key>
-	<string>feed-hub-5dab3.appspot.com</string>
+	<string>feedhub-f42a9.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:944602773348:ios:5ef2e77352b1565c342c71</string>
+	<string>1:483352088089:ios:4910c7fa2d1485a91da488</string>
+	<key>DATABASE_URL</key>
+	<string>https://feedhub-f42a9-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>

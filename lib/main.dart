@@ -27,6 +27,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(
+    // name: 'FEEDHUB',
     options: DefaultFirebaseOptions.currentPlatform,
   );
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
@@ -253,7 +254,7 @@ layOutViewScreen({String? page}) {
     case "USERS":
       return UsersHomeVC();
     case "PUSH NOTIFICATIONS":
-      return const PushNotifications();
+      return  PushNotifications();
     case "CHATS":
       return const Chats();
     case "":

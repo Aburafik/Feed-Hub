@@ -19,6 +19,7 @@ class ProfileVC extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(userId);
     return Scaffold(
       body: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -26,7 +27,9 @@ class ProfileVC extends StatelessWidget {
             stream: _userProfileStream,
             builder: ((context, snapshot) {
               if (snapshot.hasData) {
+                print(snapshot.data!.data());
                 final userInfor = snapshot.data!.data() as Map<String, dynamic>;
+                print(userInfor);
                 return SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
