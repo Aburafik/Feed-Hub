@@ -185,10 +185,7 @@ class AuthUser {
       'data': {
         'via': 'FlutterFire Cloud Messaging!!!',
       },
-      'notification': {
-        'title': title,
-        'body': message
-      },
+      'notification': {'title': title, 'body': message},
     });
   }
 
@@ -207,14 +204,13 @@ class AuthUser {
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'key=$serverKey'
         },
-        body: constructFCMPayload(title: title,message: message),
+        body: constructFCMPayload(title: title, message: message),
       );
       print('FCM request for device sent!');
     } catch (e) {
       print(e);
     }
   }
-
 
   ////UPDATE USER
   static String constructFCMPayloadForAparticularUser({String? id}) {
@@ -225,7 +221,7 @@ class AuthUser {
       },
       'notification': {
         'title': 'Hi!',
-        'body': 'A New organization food request has been uploaded!',
+        'body': 'Your order request has been approved!',
       },
     });
   }
@@ -252,6 +248,4 @@ class AuthUser {
       print(e);
     }
   }
-
-
 }
