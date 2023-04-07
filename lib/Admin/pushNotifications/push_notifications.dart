@@ -16,10 +16,13 @@ class PushNotifications extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: const Text("Send BroadCast Message"),
+        Align(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: const Text("Send BroadCast Message"),
+          ),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 150),
