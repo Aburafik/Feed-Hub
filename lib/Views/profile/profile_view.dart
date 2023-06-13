@@ -14,12 +14,11 @@ class ProfileVC extends StatelessWidget {
   final TextEditingController locationController = TextEditingController();
   final TextEditingController mobileNumberController = TextEditingController();
   static String userId = FirebaseAuth.instance.currentUser!.uid;
-  final Stream<DocumentSnapshot> _userProfileStream =
+   Stream<DocumentSnapshot> _userProfileStream =
       FirebaseFirestore.instance.collection('users').doc(userId).snapshots();
 
   @override
   Widget build(BuildContext context) {
-    print(userId);
     return Scaffold(
       body: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -27,9 +26,7 @@ class ProfileVC extends StatelessWidget {
             stream: _userProfileStream,
             builder: ((context, snapshot) {
               if (snapshot.hasData) {
-                print(snapshot.data!.data());
                 final userInfor = snapshot.data!.data() as Map<String, dynamic>;
-                print(userInfor);
                 return SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,6 +47,7 @@ class ProfileVC extends StatelessWidget {
                               ),
                             ),
                           ),
+                          SizedBox(height: 10),
                           Text(userInfor['userName']),
                         ],
                       ),

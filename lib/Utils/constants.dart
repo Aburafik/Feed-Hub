@@ -53,10 +53,10 @@ class NgoImagesCard extends StatelessWidget {
 
 Padding headerTitle({BuildContext? context, String? title}) {
   return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 15),
+    padding: const EdgeInsets.only(top: 25,bottom: 10),
     child: Text(
       title!,
-      style: Theme.of(context!).textTheme.bodyText1!.copyWith(fontSize: 18),
+      style: Theme.of(context!).textTheme.bodyLarge!.copyWith(fontSize: 14),
     ),
   );
 }

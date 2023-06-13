@@ -152,12 +152,15 @@ class AuthUser {
   logOut() async {
     startLoading();
     SharedPreferences pref = await SharedPreferences.getInstance();
+    await FirebaseAuth.instance.signOut();
+    Get.offNamed(RouterHelper.signIn);
+    stopLoading();
+    pref.remove('user');
 
-    Future.delayed(Duration(seconds: 3), () {
-      pref.remove('user');
-      Get.offNamed(RouterHelper.signIn);
-      stopLoading();
-    });
+    // Future.delayed(Duration(seconds: 3), () async {
+    //   pref.remove('user');
+
+    // });
   }
 
   Future sendQuestion(

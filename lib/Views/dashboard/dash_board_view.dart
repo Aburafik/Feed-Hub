@@ -112,7 +112,7 @@ class _DashBoardViewState extends State<DashBoardView> {
         actions: [
           IconButton(
             onPressed: () {},
-            icon: const Icon(Icons.notifications),
+            icon: const Icon(Icons.notifications,size: 20,),
           )
         ],
       ),
@@ -131,13 +131,13 @@ class _DashBoardViewState extends State<DashBoardView> {
         currentIndex: _pageIndex,
         onTap: _setPage,
         items: const [
-          BottomNavigationBarItem(label: "Home", icon: Icon(FeatherIcons.home)),
+          BottomNavigationBarItem(label: "Home", icon: Icon(FeatherIcons.home,size: 20,)),
           BottomNavigationBarItem(
-              label: "History", icon: Icon(FeatherIcons.list)),
+              label: "History", icon: Icon(FeatherIcons.list,size: 20,)),
           BottomNavigationBarItem(
-              label: "Chats", icon: Icon(FeatherIcons.messageSquare)),
+              label: "Chats", icon: Icon(FeatherIcons.messageSquare,size: 20,)),
           BottomNavigationBarItem(
-              label: "Profile", icon: Icon(FeatherIcons.user)),
+              label: "Profile", icon: Icon(FeatherIcons.user,size: 20,)),
         ],
       ),
     );
@@ -151,11 +151,7 @@ class AppDrawerComponent extends StatelessWidget {
   final AuthUser _authUser = AuthUser();
   @override
   Widget build(BuildContext context) {
-    TextStyle textStyle = Theme.of(context).textTheme.bodyText1!.copyWith();
-    const divider = Divider(
-      color: Colors.grey,
-      height: 10,
-    );
+    TextStyle textStyle = Theme.of(context).textTheme.bodyLarge!.copyWith();
     return Drawer(
       child: Column(
         children: [
@@ -200,20 +196,20 @@ class AppDrawerComponent extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: const Icon(FeatherIcons.clock),
+            leading: const Icon(FeatherIcons.share2),
             title: Text("Share", style: textStyle),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: ListTile(
-              leading: const Icon(FeatherIcons.clock),
+              leading: const Icon(FeatherIcons.activity),
               title: Text(
                 "Terms and Conditions",
                 style: textStyle,
               ),
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 30),
           GestureDetector(
             onTap: () async {
               await _authUser.logOut();
@@ -221,13 +217,12 @@ class AppDrawerComponent extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(left: 40),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     "Logout",
-                    style: textStyle,
+                    style: textStyle.copyWith(color: Colors.red,fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(width: 10),
-                  const Icon(FeatherIcons.logOut),
                 ],
               ),
             ),

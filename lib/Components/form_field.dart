@@ -33,10 +33,11 @@ class FormFieldComponent extends StatelessWidget {
       controller: controller,
       decoration: InputDecoration(
           contentPadding:
-              const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+              const EdgeInsets.symmetric(vertical: 0, horizontal: 5),
           label: Text(
             label!,
           ),
+          labelStyle: TextStyle(fontSize: 12),
           filled: true,
           fillColor: AppColors.lightGreyColor,
           border: InputBorder.none),

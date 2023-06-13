@@ -18,14 +18,14 @@ class PushNotifications extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Align(
+        const Align(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: const Text("Send BroadCast Message"),
+            padding: EdgeInsets.all(8.0),
+            child: Text("Send BroadCast Message"),
           ),
         ),
         Center(
-          child: Container(
+          child: SizedBox(
             height: 300,
             width: 500,
             child: Card(
@@ -56,7 +56,8 @@ class PushNotifications extends StatelessWidget {
                           if (_formKey.currentState!.validate()) {
                             await donationServices.sendPushNotication(
                                 title: messageTitleController.text.toString(),
-                                body: messageBodyController.text.toString(),context: context);
+                                body: messageBodyController.text.toString(),
+                                context: context);
                             await AuthUser.sendPushMessage(
                               title: messageTitleController.text.toString(),
                               message: messageBodyController.text.toString(),

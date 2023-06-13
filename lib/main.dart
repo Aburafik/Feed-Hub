@@ -10,6 +10,7 @@ import 'package:feed_hub/Services/dynamic_link.dart';
 import 'package:feed_hub/Utils/colors.dart';
 import 'package:feed_hub/Utils/router_helper.dart';
 import 'package:feed_hub/firebase_options.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(
-    // name: 'FEEDHUB',
+    name: 'FEEDHUB',
     options: DefaultFirebaseOptions.currentPlatform,
   );
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
@@ -40,6 +41,12 @@ void main() async {
     alert: true,
     badge: true,
     sound: true,
+  );
+
+  await FirebaseMessaging.onMessage.listen(
+    (event) {
+      print(event.data);
+    },
   );
   runApp(const MyApp());
 }
@@ -55,7 +62,8 @@ class _MyAppState extends State<MyApp> {
   final DynamicLinks initLink = DynamicLinks();
   @override
   void initState() {
-    checkUserStatus();
+    // checkUserStatus();
+    isUserLoggedIn();
 
     super.initState();
   }
@@ -72,6 +80,28 @@ class _MyAppState extends State<MyApp> {
     print("#########$userName###########");
   }
 
+  isUserLoggedIn() async {
+    FirebaseAuth.instance.authStateChanges().listen(
+      (user) {
+        if (user != null) {
+          print("####################THE USER IS LOGGED IN");
+          Get.toNamed(RouterHelper.dashBoard);
+        } else {
+          print("####################THE USER IS LOGGED OUT");
+          Get.toNamed(RouterHelper.signIn);
+        }
+      },
+    );
+  }
+
+  // isUserLoggedIn() {
+  //   User currentuser = FirebaseAuth.instance.currentUser!;
+  //   if (currentuser != null) {
+  //     Get.toNamed(RouterHelper.dashBoard);
+  //     checkUserStatus();
+  //   }else{}
+  // }
+
   @override
   Widget build(BuildContext context) {
     return ConnectivityAppWrapper(
@@ -80,6 +110,7 @@ class _MyAppState extends State<MyApp> {
         debugShowCheckedModeBanner: false,
         title: 'FEED HUB ADMIN',
         theme: ThemeData(
+          fontFamily: "Roboto",
           scaffoldBackgroundColor: AppColors.backGroundColor,
           appBarTheme: const AppBarTheme(
             backgroundColor: AppColors.primaryColor,
@@ -254,7 +285,7 @@ layOutViewScreen({String? page}) {
     case "USERS":
       return UsersHomeVC();
     case "PUSH NOTIFICATIONS":
-      return  PushNotifications();
+      return PushNotifications();
     case "CHATS":
       return const Chats();
     case "":

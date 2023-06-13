@@ -6,13 +6,14 @@ import 'package:intl/intl.dart';
 
 class DonationHistoryVC extends StatelessWidget {
   DonationHistoryVC({super.key});
-  static String userId = FirebaseAuth.instance.currentUser!.uid;
+  String userId = FirebaseAuth.instance.currentUser!.uid;
   final Stream<QuerySnapshot> myDonationHistory = FirebaseFirestore.instance
       .collection('AllDonations')
       .orderBy('created', descending: true)
       .snapshots();
   @override
   Widget build(BuildContext context) {
+    print("############User ID $userId####################");
     return Scaffold(
       body: StreamBuilder(
         stream: myDonationHistory,
@@ -32,24 +33,31 @@ class DonationHistoryVC extends StatelessWidget {
                       DateFormat('EEE, M/d/y').format(dateTime).toString();
                   /////
                   return !data["userId"].toString().contains(userId)
-                      ? Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height / 2.5),
-                            Image.asset(
-                              Images.folder,
-                              height: 80,
-                            ),
-                            const Text("No Donaton Histroy"),
-                          ],
-                        )
+                      ? Wrap()
+                      // Column(
+                      //     mainAxisAlignment: MainAxisAlignment.center,
+                      //     children: [
+                      //       SizedBox(
+                      //           height:
+                      //               MediaQuery.of(context).size.height / 2.5),
+                      //       Image.asset(
+                      //         Images.folder,
+                      //         height: 80,
+                      //       ),
+                      //       const Text("No Donaton Histroy"),
+                      //     ],
+                      //   )
                       : data["userId"] == userId
                           ? Card(
                               child: ListTile(
-                                title: Text("Donated to\n${data["name"]}"),
-                                subtitle: Text(formatDate),
+                                title: Text(
+                                  "Donated to\n${data["name"]}",
+                                  style: TextStyle(fontSize: 14),
+                                ),
+                                subtitle: Text(
+                                  formatDate,
+                                  style: TextStyle(fontSize: 12),
+                                ),
                                 leading: const Icon(
                                   Icons.check_circle_outline,
                                 ),
@@ -77,12 +85,27 @@ class DonationHistoryVC extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-                                    Text(formatTime)
+                                    Text(
+                                      formatTime,
+                                      style: TextStyle(fontSize: 11),
+                                    )
                                   ],
                                 ),
                               ),
                             )
-                          : Wrap();
+                          : Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                    height: MediaQuery.of(context).size.height /
+                                        2.5),
+                                Image.asset(
+                                  Images.folder,
+                                  height: 80,
+                                ),
+                                const Text("No Donaton Histroy"),
+                              ],
+                            );
                 });
           } else {
             return const Center(

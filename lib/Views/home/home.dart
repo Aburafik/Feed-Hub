@@ -190,7 +190,7 @@ class NGosCard extends StatelessWidget {
   final dynamic organizations;
   @override
   Widget build(BuildContext context) {
-    TextStyle style = Theme.of(context).textTheme.bodyText1!;
+    TextStyle style = Theme.of(context).textTheme.bodyText1!.copyWith(fontSize:12 );
     return GestureDetector(
       onTap: () => Get.toNamed(RouterHelper.homeDetailsView,
           arguments: recentOrganizations),
@@ -218,10 +218,10 @@ class NGosCard extends StatelessWidget {
                   children: [
                     Text(
                       "${recentOrganizations['organizationName']}",
-                      style: style.copyWith(fontSize: 15),
+                      style: style.copyWith(fontSize: 14,fontWeight: FontWeight.w500),
                     ),
                     const SizedBox(
-                      height: 5,
+                      height: 10,
                     ),
                     Row(
                       children: [
@@ -231,35 +231,35 @@ class NGosCard extends StatelessWidget {
                           color: Colors.grey,
                         ),
                         Text(
-                          recentOrganizations['location'],
+                          recentOrganizations['location'],style: style,
                         )
                       ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 15, bottom: 5),
-                      child: LinearPercentIndicator(
-                        padding: EdgeInsets.zero,
-                        barRadius: const Radius.circular(5),
-                        width: 180,
-                        lineHeight: 5.0,
-                        percent: 0.6,
-                        backgroundColor: Colors.grey[300],
-                        progressColor: AppColors.primaryColor,
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Target: 50",
-                          style: style,
-                        ),
-                        Text("65%",
-                            style: style.copyWith(
-                              color: AppColors.primaryColor,
-                            ))
-                      ],
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(top: 15, bottom: 5),
+                    //   child: LinearPercentIndicator(
+                    //     padding: EdgeInsets.zero,
+                    //     barRadius: const Radius.circular(5),
+                    //     width: 180,
+                    //     lineHeight: 5.0,
+                    //     percent: 0.6,
+                    //     backgroundColor: Colors.grey[300],
+                    //     progressColor: AppColors.primaryColor,
+                    //   ),
+                    // ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     Text(
+                    //       "Target: 50",
+                    //       style: style,
+                    //     ),
+                    //     Text("65%",
+                    //         style: style.copyWith(
+                    //           color: AppColors.primaryColor,
+                    //         ))
+                    //   ],
+                    // ),
                   ],
                 ),
               )
