@@ -85,10 +85,15 @@ class _MyAppState extends State<MyApp> {
       (user) {
         if (user != null) {
           print("####################THE USER IS LOGGED IN");
-          Get.toNamed(RouterHelper.dashBoard);
+          GetPlatform.isWeb
+              ? Get.toNamed(RouterHelper.adminLogin)
+              : Get.toNamed(RouterHelper.dashBoard);
         } else {
           print("####################THE USER IS LOGGED OUT");
-          Get.toNamed(RouterHelper.signIn);
+          // Get.toNamed(RouterHelper.signIn);
+          GetPlatform.isWeb
+              ? Get.toNamed(RouterHelper.adminLogin)
+              : Get.toNamed(RouterHelper.signIn);
         }
       },
     );
