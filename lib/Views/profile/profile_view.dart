@@ -13,9 +13,9 @@ class ProfileVC extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController locationController = TextEditingController();
   final TextEditingController mobileNumberController = TextEditingController();
-  static String userId = FirebaseAuth.instance.currentUser!.uid;
-   Stream<DocumentSnapshot> _userProfileStream =
-      FirebaseFirestore.instance.collection('users').doc(userId).snapshots();
+   String userId = FirebaseAuth.instance.currentUser!.uid;
+  //  Stream<DocumentSnapshot> userProfileStream =
+  //     FirebaseFirestore.instance.collection('users').doc(userId).snapshots();
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class ProfileVC extends StatelessWidget {
       body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: StreamBuilder<DocumentSnapshot>(
-            stream: _userProfileStream,
+            stream: FirebaseFirestore.instance.collection('users').doc(userId).snapshots(),
             builder: ((context, snapshot) {
               if (snapshot.hasData) {
                 final userInfor = snapshot.data!.data() as Map<String, dynamic>;
